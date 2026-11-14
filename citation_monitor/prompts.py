@@ -22,13 +22,13 @@ def classify_style(text: str) -> str:
     t = text.lower()
     if "alternativ" in t or "instead of" in t:
         return "alternatives"
-    if " vs " in t or "versus" in t or "comparison" in t:
+    if " vs " in t or "versus" in t or "comparison" in t or "comparaci" in t:
         return "vs"
-    if any(w in t for w in ("cheapest", "cost", "price", "pricing", "fee", "expensive", "free")):
+    if re.search(r"\b(cheapest|cheaper|cost|price|pricing|fee|expensive|free|gratis|barato|precio|costo)\b", t):
         return "pricing"
-    if t.startswith("how") or "how do" in t or "how can" in t:
+    if t.startswith("how") or "how do" in t or "how can" in t or t.startswith("cómo") or "cómo " in t:
         return "how_to"
-    if "best" in t or re.search(r"\btop\b", t) or "which" in t:
+    if "best" in t or re.search(r"\btop\b", t) or "which" in t or "mejor" in t or t.startswith("cuál"):
         return "best_tool"
     return "general"
 

@@ -92,13 +92,15 @@ def render_md(brand, week, mode, score, d, recs, history_rows, snippets) -> str:
             L.append("**Citations gained:**")
             L.append("")
             for g in d["gained"]:
-                L.append(f"- ✅ “{g['prompt_text']}” ({g['engine']}): was named with {', '.join(g['was']['competitors']) or '—'}, now {', '.join(g['now']['competitors']) or '—'}")
+                comp = ", ".join(g["now"]["competitors"]) or "—"
+                L.append(f"- ✅ “{g['prompt_text']}” ({g['engine']}): brand absent last week → cited this week (alongside {comp})")
             L.append("")
         if d["lost"]:
             L.append("**Citations lost (fix these first):**")
             L.append("")
             for g in d["lost"]:
-                L.append(f"- ❌ “{g['prompt_text']}” ({g['engine']}): dropped out; competitors named: {', '.join(g['now']['competitors']) or '—'}")
+                comp = ", ".join(g["now"]["competitors"]) or "—"
+                L.append(f"- ❌ “{g['prompt_text']}” ({g['engine']}): cited last week → dropped this week; competitors still named: {comp}")
             L.append("")
         if not d["gained"] and not d["lost"]:
             L.append("No citation changes week-over-week.")

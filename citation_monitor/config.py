@@ -307,7 +307,7 @@ def to_dict(cfg: Config) -> dict:
 # invoicing SaaS). `python -m citation_monitor init` writes this to brand.yaml.
 # --------------------------------------------------------------------------
 
-TEMPLATE = """\\
+TEMPLATE = """\
 # AI Answer Citation Monitor — brand config
 # Edit the brand block, competitor list and prompts for your product.
 # Lines starting with [xx] mark non-English prompts (locale packs).

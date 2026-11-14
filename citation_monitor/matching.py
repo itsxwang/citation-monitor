@@ -47,10 +47,16 @@ def _exact_positions(text: str, alias: str) -> list:
 
 
 def _fuzzy_position(text: str, alias: str):
-    """Return (pos, matched_token) for typo-tolerant matching, or (None, None)."""
+    """Return (pos, matched_token) for typo-tolerant matching, or (None, None).
+
+    Guard: a fuzzy candidate must not be SHORTER than the alias. Typos keep
+    roughly the same length; common-word truncations (e.g. 'crypto' vs the
+    alias 'Cryptio') are false positives and rejected.
+    """
     alias_tokens = [t for t in TOKEN_RE.findall(alias) if len(t) >= 4]
     if not alias_tokens:
         return None, None
+    from difflib import SequenceMatcher
     alias_joined = "".join(t for t in alias_tokens)
     alias_joined = re.sub(r"[._+-]", "", alias_joined).lower()
     tokens = [(m.start(), m.group(0)) for m in TOKEN_RE.finditer(text)]
@@ -63,15 +69,17 @@ def _fuzzy_position(text: str, alias: str):
             cand = re.sub(r"[._+-]", "", tok).lower()
             if cand == a:
                 continue  # exact pass already handled it
-            from difflib import SequenceMatcher
+            if len(cand) < len(a):
+                continue  # never fuzzy-match a truncation
             if SequenceMatcher(None, cand, a).ratio() >= FUZZY_THRESHOLD:
                 return start, tok
     else:
-        from difflib import SequenceMatcher
         for i in range(0, len(tokens) - n + 1):
             window = tokens[i:i + n]
             cand = "".join(re.sub(r"[._+-]", "", t) for _, t in window).lower()
             if cand == alias_joined:
+                continue
+            if len(cand) < len(alias_joined):
                 continue
             if SequenceMatcher(None, cand, alias_joined).ratio() >= FUZZY_THRESHOLD:
                 return window[0][0], window[0][1]

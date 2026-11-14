@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Visibility Digest — StableDesk (2026-W46)</title>
+<style>
+:root { --ink:#1c2130; --muted:#6b7280; --line:#e5e7eb; --bg:#f7f7fb; --card:#ffffff;
+        --accent:#6d5dfc; --good:#0e9f6e; --bad:#e02424; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--ink);
+       font:15px/1.55 -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 32px 20px 64px; }
+header h1 { font-size: 26px; margin: 0 0 4px; }
+header .sub { color: var(--muted); margin-bottom: 18px; }
+.badge { display:inline-block; padding:2px 10px; border-radius:999px; font-size:12px;
+         font-weight:600; letter-spacing:.03em; }
+.badge.demo { background:#fef3c7; color:#92400e; border:1px solid #fcd34d; }
+.badge.live { background:#d1fae5; color:#065f46; border:1px solid #6ee7b7; }
+.cards { display:flex; gap:14px; flex-wrap:wrap; margin: 18px 0; }
+.card { flex:1 1 180px; background:var(--card); border:1px solid var(--line);
+        border-radius:12px; padding:14px 16px; }
+.card .label { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); }
+.card .value { font-size:30px; font-weight:700; margin-top:2px; }
+.card .delta { font-size:12.5px; margin-top:2px; color:var(--muted); }
+.card .delta.up { color:var(--good); } .card .delta.down { color:var(--bad); }
+.card.trend { flex-basis:100%; }
+.spark { width:100%; height:96px; }
+.sparklbl { font-size:10px; fill:#9ca3af; }
+h2 { font-size:17px; margin: 30px 0 10px; }
+table { width:100%; border-collapse: collapse; background:var(--card);
+        border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+th, td { padding:9px 12px; text-align:left; border-bottom:1px solid var(--line); font-size:14px; }
+th { background:#fafafc; font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+tr:last-child td { border-bottom:none; }
+.snippet { background:var(--card); border:1px solid var(--line); border-left:3px solid var(--accent);
+           border-radius:8px; padding:10px 14px; margin:10px 0; font-size:13.5px; color:#374151; }
+.chg { background:var(--card); border:1px solid var(--line); border-radius:8px;
+       padding:9px 14px; margin:8px 0; font-size:14px; }
+.chg.gain { border-left:3px solid var(--good); }
+.chg.loss { border-left:3px solid var(--bad); }
+.rec { background:var(--card); border:1px solid var(--line); border-radius:12px;
+       padding:16px 18px; margin:12px 0; }
+.rec h3 { margin:0 0 8px; font-size:16px; }
+.rec .pri { display:inline-block; background:var(--accent); color:#fff; border-radius:6px;
+            padding:1px 8px; font-size:12px; font-weight:700; margin-right:8px; }
+.rec .why { color:#374151; font-size:14px; margin-bottom:10px; }
+.rec ul { margin:0; padding-left:20px; }
+.rec li { margin:4px 0; font-size:14px; }
+.rec .targets { margin-top:10px; font-size:12.5px; color:var(--muted); }
+footer { margin-top:40px; border-top:1px solid var(--line); padding-top:14px;
+         color:var(--muted); font-size:12.5px; }
+code { background:#eef0f6; border-radius:4px; padding:0 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Weekly AI Visibility Digest — StableDesk</h1>
+    <div class="sub">2026-W46 · <span class='badge demo'>DEMO DATA — fixture replay</span> · does ChatGPT-style &amp; Perplexity-style AI name you when buyers ask?</div>
+  </header>
+
+  <div class="cards">
+    <div class="card"><div class="label">Share of voice</div>
+      <div class="value">21.1%</div><span class='delta up'>+0.9 pts vs last week</span></div>
+    <div class="card"><div class="label">Citation rate</div>
+      <div class="value">56%</div>
+      <div class="delta">21/36 prompts named StableDesk · <span class='delta up'>+1.4 pts vs last week</span></div></div>
+    <div class="card"><div class="label">Answers analyzed</div>
+      <div class="value">72</div>
+      <div class="delta">gemini, groq</div></div>
+    <div class="card trend"><div class="label">Score trend (share of voice by week)</div>
+      <svg viewBox="0 0 560 90" class="spark"><polyline fill="none" stroke="#6d5dfc" stroke-width="3" points="8.0,67.1 552.0,66.4"/><circle cx="8.0" cy="67.1" r="3.5" fill="#6d5dfc"/><circle cx="552.0" cy="66.4" r="3.5" fill="#6d5dfc"/><text x="8.0" y="89" class="sparklbl">start</text><text x="552.0" y="89" class="sparklbl" text-anchor="end">now</text></svg></div>
+  </div>
+
+  <h2>Score trend</h2>
+  <table><tr><th>Week</th><th>Share of voice</th><th>Citation rate</th></tr><tr><td>2026-W45</td><td>20.1%</td><td>54.2%</td></tr><tr><td>2026-W46</td><td>21.1%</td><td>55.6%</td></tr></table>
+
+  <h2>Per-engine breakdown</h2>
+  <table><tr><th>Engine</th><th>Model</th><th>Answers</th><th>Brand cited</th><th>SOV</th></tr><tr><td><b>gemini</b></td><td><code>gemini-2.5-flash</code></td><td>36</td><td>19/36</td><td>19.9%</td></tr><tr><td><b>groq</b></td><td><code>llama-3.1-8b-instant</code></td><td>36</td><td>21/36</td><td>22.2%</td></tr></table>
+
+  <h2>Which competitors got cited — and why</h2>
+  <table><tr><th>Competitor</th><th>Answers naming it</th><th>Δ vs last week</th></tr><tr><td><b>BitPay</b></td><td>44</td><td>+0</td></tr><tr><td><b>Coinbase Commerce</b></td><td>42</td><td>+0</td></tr><tr><td><b>Request Finance</b></td><td>34</td><td>+2</td></tr><tr><td><b>Gnosis Pay</b></td><td>13</td><td>+1</td></tr><tr><td><b>Cryptio</b></td><td>13</td><td>+1</td></tr></table>
+  <div class='snippet'><b>BitPay</b> · prompt “What is the best tool for invoicing clients in USDC?”<br>“…in invoicing tool with recurring USDC/USDT billing and on-chain receipts 2. **BitPay** — one of the oldest crypto payment processors, with invoicing and a host…”</div><div class='snippet'><b>Coinbase Commerce</b> · prompt “What is the best tool for invoicing clients in USDC?”<br>“…of the oldest crypto payment processors, with invoicing and a hosted checkout 3. **Coinbase Commerce** — Coinbase&#x27;s payments product covering checkout plus basic invoicing If…”</div><div class='snippet'><b>Request Finance</b> · prompt “Best stablecoin invoicing software for freelancers”<br>“…lecoin invoicing tool with recurring USDC/USDT billing and on-chain receipts 2. **Request Finance** — a crypto finance suite popular with startups — invoices, payroll, acco…”</div><div class='snippet'><b>Gnosis Pay</b> · prompt “Best crypto payment tools with built-in invoicing”<br>“…rce** — Coinbase&#x27;s payments product covering checkout plus basic invoicing 3. **Gnosis Pay** — a self-custody Visa card on a Safe wallet — built for spending, not in…”</div>
+
+  <h2>What changed this week</h2>
+  <div class='chg gain'>✅ <b>Gained:</b> “Top platforms for USDC subscription billing” (groq) — brand absent last week, cited now</div><div class='chg gain'>✅ <b>Gained:</b> “Top platforms for USDC subscription billing” (gemini) — brand absent last week, cited now</div><div class='chg gain'>✅ <b>Gained:</b> “Alternatives to Coinbase Commerce for international clients” (groq) — brand absent last week, cited now</div><div class='chg gain'>✅ <b>Gained:</b> “Alternatives to Coinbase Commerce for international clients” (gemini) — brand absent last week, cited now</div><div class='chg gain'>✅ <b>Gained:</b> “Is there a simple tool for monthly stablecoin invoices?” (gemini) — brand absent last week, cited now</div><div class='chg loss'>❌ <b>Lost:</b> “Top crypto invoicing tools for small businesses” (gemini) — cited last week, dropped now · competitors still named: Coinbase Commerce, BitPay, Request Finance</div><div class='chg loss'>❌ <b>Lost:</b> “Cheapest way to accept USDC invoice payments” (groq) — cited last week, dropped now · competitors still named: BitPay, Coinbase Commerce</div><div class='chg loss'>❌ <b>Lost:</b> “Cheapest way to accept USDC invoice payments” (gemini) — cited last week, dropped now · competitors still named: BitPay, Coinbase Commerce</div><div class='chg loss'>❌ <b>Lost:</b> “Cuál es la mejor herramienta para facturar en USDT” (gemini) — cited last week, dropped now · competitors still named: BitPay, Request Finance</div>
+
+  <h2>This week's 3 actions (prioritized)</h2>
+  <div class='rec'><h3><span class='pri'>P1</span>Win the Spanish-language prompts — competitors currently own them</h3><div class='why'><b>Why:</b> StableDesk was named in 1/4 Spanish prompts (25%). Non-English queries are your wedge: fewer competitors bother publishing localized answers, so each citation is cheap to win and sticky.</div><ul><li>Translate your top 5 landing pages + pricing page into Spanish.</li><li>Publish a Spanish FAQ answering the exact Spanish-tagged prompts from your config.</li><li>Add hreflang tags so the Spanish pages are indexable in the right locale.</li></ul><div class='targets'>Target prompts: “Cuál es la mejor herramienta para facturar en USDT”; “Cómo facturar a clientes en criptomonedas desde Argentina”; “Alternativas a BitPay para facturación”</div></div><div class='rec'><h3><span class='pri'>P2</span>Own the pricing question before competitors answer it for you</h3><div class='why'><b>Why:</b> In 3 pricing-shaped prompts, StableDesk was named in 1 while competitors were named in 3. You also LOST a previously-won pricing prompt this week (&#x27;Cheapest way to accept USDC invoice payments&#x27;). Answer engines prefer pages with explicit numbers to quote.</div><ul><li>Put exact prices (monthly plan AND per-invoice fee) as plain text on /pricing — no &#x27;contact sales&#x27; gating.</li><li>Add an FAQ entry per tracked pricing prompt (&#x27;How much does it cost to invoice in USDC?&#x27;) with the number in the first sentence.</li><li>Publish a short &#x27;cost of stablecoin invoicing&#x27; breakdown post that compares your flat fee vs % processors.</li></ul><div class='targets'>Target prompts: “Cheapest way to accept USDC invoice payments”; “Crypto invoicing tools with no monthly fee”; “What does it cost to invoice in stablecoins?”</div></div><div class='rec'><h3><span class='pri'>P3</span>Turn “BitPay alternatives” prompts into comparison-page wins</h3><div class='why'><b>Why:</b> Across 10 &#x27;alternatives / vs&#x27; prompts this week, competitors were named in 100% of them but StableDesk in only 60% (6/10). BitPay leads the whole run with 44 citations — answer engines default to it because it has comparison-shaped content to quote.</div><ul><li>Publish a &#x27;StableDesk vs BitPay&#x27; page with a feature/price table answer engines can quote verbatim.</li><li>Create an &#x27;X alternatives&#x27; hub page naming each tracked competitor, with honest positioning and current pricing.</li><li>Mirror the exact prompt phrasing as on-page H2 questions so the pages match buyer wording 1:1.</li></ul><div class='targets'>Target prompts: “BitPay alternatives for invoicing”; “Coinbase Commerce alternatives for recurring billing”; “Request Finance alternatives for freelancer invoicing”</div></div>
+
+  <footer>
+    <p><b>Methodology.</b> Answers are collected weekly from official LLM APIs (free tiers of
+    Groq/Llama and Google Gemini by default) responding to your buyer-phrase prompts; these serve as
+    proxies for the AI answer engines buyers actually use. Mention detection uses exact + alias
+    matching with typo tolerance. <b>Share of voice</b> = your share of named products per answer,
+    averaged across answers. <b>Citation rate</b> = share of answers naming your brand at all.
+    Token use per weekly run is intentionally tiny (pennies at paid rates; $0 on free tiers).</p>
+    <p><i>Demo disclosure: fixture responses are synthetic and recorded by the pipeline authors; no live API calls were made for this report.</i></p>
+    <p>Generated by citation-monitor · crypto-native · $19/mo</p>
+  </footer>
+</div>
+</body>
+</html>

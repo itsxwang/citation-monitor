@@ -122,6 +122,7 @@ def _write_digest(out_dir: str, week: str, brand, mode, score, d, recs, history_
 def run_pipeline(cfg, demo: bool = False, out_dir: str | None = None,
                  limit: int | None = None, log=print) -> dict:
     prompts = build_prompts(cfg, limit if limit is not None else cfg.run.max_prompts)
+    full_prompts = build_prompts(cfg)  # history seeding always uses the full set
     log(f"AI Answer Citation Monitor — weekly run for {cfg.brand.name!r} "
         f"({len(prompts)} prompts)")
 
@@ -132,7 +133,7 @@ def run_pipeline(cfg, demo: bool = False, out_dir: str | None = None,
     if mode == "demo":
         # Seed a previous-week demo run once, so the digest has a real diff.
         if not store.has_run(conn, store.prev_week_label(1), "demo"):
-            prev_rows = _rows_from_fixture(engines, prompts, prev_fixture, cfg)
+            prev_rows = _rows_from_fixture(engines, full_prompts, prev_fixture, cfg)
             prev_score = scoring.score_run(prev_rows)
             prev_meta = {
                 "created_at": (datetime.now(timezone.utc) - timedelta(days=7)).isoformat(),

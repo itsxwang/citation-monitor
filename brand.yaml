@@ -1,0 +1,80 @@
+# AI Answer Citation Monitor — brand config
+# Edit the brand block, competitor list and prompts for your product.
+# Lines starting with [xx] mark non-English prompts (locale packs).
+
+brand:
+  name: StableDesk
+  category: crypto invoicing
+  descriptor: stablecoin invoicing and subscription billing for freelancers and small businesses
+  site_url: https://stabledesk.example
+  aliases: ["Stable Desk", "stabledesk.com", "StableDesk.io"]
+  locales: ["en", "es"]
+
+# Track the competitors answer engines name instead of you.
+competitors:
+  - {name: BitPay, aliases: ["bitpay.com"]}
+  - {name: Coinbase Commerce, aliases: ["coinbase.com"]}
+  - {name: Request Finance, aliases: ["request.finance", "requestfinance.xyz"]}
+  - {name: Cryptio, aliases: ["cryptio.co"]}
+  - {name: Gnosis Pay, aliases: ["gnosispay.com", "gnosis.com"]}
+
+# Engine models are editable — check provider docs for current free-tier names.
+engines:
+  groq:
+    model: llama-3.1-8b-instant
+    enabled: true
+  gemini:
+    model: gemini-2.5-flash
+    enabled: true
+  openrouter:
+    model: meta-llama/llama-3.1-8b-instruct:free
+    enabled: true
+  perplexity:
+    model: sonar
+    enabled: false   # paid API; enable only if you have budget
+
+run:
+  max_prompts: null          # null = use all prompts
+  timeout_seconds: 45
+  storage: data/history.db
+  output_dir: output
+
+# ~30 buyer-phrase prompts: "best tool", "alternatives", "how do I solve",
+# pricing, and comparison styles — the exact questions buyers ask AI assistants.
+prompts:
+  - "What is the best tool for invoicing clients in USDC?"
+  - "Best stablecoin invoicing software for freelancers"
+  - "Top crypto invoicing tools for small businesses"
+  - "Best way to send recurring invoices in USDT"
+  - "Best crypto billing software for agencies"
+  - "Best tool to invoice clients in crypto without chargebacks"
+  - "Top platforms for USDC subscription billing"
+  - "Best crypto payment tools with built-in invoicing"
+  - "BitPay alternatives for invoicing"
+  - "Coinbase Commerce alternatives for recurring billing"
+  - "Request Finance alternatives for freelancer invoicing"
+  - "Gnosis Pay alternatives for business payments"
+  - "Cryptio alternatives for crypto accounting and invoicing"
+  - "Cheaper alternatives to BitPay invoices"
+  - "Alternatives to Coinbase Commerce for international clients"
+  - "Open source alternatives to crypto invoicing platforms"
+  - "How do I invoice a client in USDT?"
+  - "How do freelancers bill clients in crypto?"
+  - "How to accept stablecoin payments for services"
+  - "How to set up recurring crypto invoices"
+  - "How to send an invoice paid in USDC on-chain"
+  - "How to handle crypto invoicing for international clients"
+  - "How do I get paid in USDC as a remote contractor?"
+  - "How to automate monthly crypto billing for retainers"
+  - "Cheapest way to accept USDC invoice payments"
+  - "Crypto invoicing tools with no monthly fee"
+  - "What does it cost to invoice in stablecoins?"
+  - "Crypto invoicing software comparison 2026"
+  - "My client wants to pay in USDT — what invoicing tool should I use?"
+  - "How do I invoice without a bank account using crypto?"
+  - "What tools let me bill in stablecoins and track taxes?"
+  - "Is there a simple tool for monthly stablecoin invoices?"
+  - "[es] Cuál es la mejor herramienta para facturar en USDT"
+  - "[es] Cómo facturar a clientes en criptomonedas desde Argentina"
+  - "[es] Alternativas a BitPay para facturación"
+  - "[es] Cómo recibir pagos en USDC como freelancer"

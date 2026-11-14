@@ -32,7 +32,7 @@ def build_recommendations(score: dict, d: dict, brand_name: str, competitor_name
     if comp_total and brand_total < comp_total:
         brand_rate = brand_total / comp_total * 100.0
         comp_name = top_comp[0] if top_comp else "the incumbent"
-        sev = (1 - brand_total / comp_total) + 0.35
+        sev = (1 - brand_total / comp_total) + 0.55  # comparison pages are the highest-leverage fix
         candidates.append((sev, Rec(
             priority="P1",
             title=f"Turn “{comp_name} alternatives” prompts into comparison-page wins",
@@ -97,6 +97,8 @@ def build_recommendations(score: dict, d: dict, brand_name: str, competitor_name
         )))
 
     # ---- candidate: localization ------------------------------------------
+    LANG_LABEL = {"es": "Spanish", "pt": "Portuguese", "de": "German", "fr": "French",
+                  "it": "Italian", "nl": "Dutch"}
     locales = {}
     for p in score["prompts"]:
         locales.setdefault(p["locale"], {"n": 0, "brand": 0})
@@ -107,18 +109,19 @@ def build_recommendations(score: dict, d: dict, brand_name: str, competitor_name
             continue
         rate = st["brand"] / st["n"] if st["n"] else 0.0
         if rate < 0.5:
+            lang = LANG_LABEL.get(loc, loc.upper())
             candidates.append((1.3, Rec(
                 priority="P2",
-                title=f"Win the {loc.upper()}-language prompts — competitors currently own them",
+                title=f"Win the {lang}-language prompts — competitors currently own them",
                 why=(
-                    f"{brand_name} was named in {st['brand']}/{st['n']} {loc.upper()} prompts "
+                    f"{brand_name} was named in {st['brand']}/{st['n']} {lang} prompts "
                     f"({_pct(rate * 100)}). Non-English queries are your wedge: fewer competitors "
                     "bother publishing localized answers, so each citation is cheap to win and sticky."
                 ),
                 actions=[
-                    f"Translate your top 5 landing pages + pricing page into {loc.upper()}.",
-                    f"Publish an {loc.upper()} FAQ answering the exact {loc}-tagged prompts from your config.",
-                    f"Add hreflang tags so the {loc.upper()} pages are indexable in the right locale.",
+                    f"Translate your top 5 landing pages + pricing page into {lang}.",
+                    f"Publish a {lang} FAQ answering the exact {lang}-tagged prompts from your config.",
+                    f"Add hreflang tags so the {lang} pages are indexable in the right locale.",
                 ],
                 targets=[p["prompt_text"] for p in score["prompts"] if p["locale"] == loc][:4],
             )))
@@ -163,6 +166,10 @@ def build_recommendations(score: dict, d: dict, brand_name: str, competitor_name
         )))
 
     # ---- sort + backfill to exactly 3 --------------------------------------
+    # dedupe targets inside each rec (per-engine duplicates otherwise repeat)
+    for _, r in candidates:
+        r.targets = list(dict.fromkeys(r.targets))
+
     candidates.sort(key=lambda t: -t[0])
     recs = [r for _, r in candidates[:3]]
 

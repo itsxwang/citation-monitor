@@ -126,9 +126,10 @@ def render_html(brand, week, mode, score, d, recs, history_rows, snippets) -> st
 
     chgs = []
     for g in d.get("gained", []):
-        chgs.append(f"<div class='chg gain'>✅ <b>Gained:</b> “{esc(g['prompt_text'])}” ({esc(g['engine'])})</div>")
+        chgs.append(f"<div class='chg gain'>✅ <b>Gained:</b> “{esc(g['prompt_text'])}” ({esc(g['engine'])}) — brand absent last week, cited now</div>")
     for g in d.get("lost", []):
-        chgs.append(f"<div class='chg loss'>❌ <b>Lost:</b> “{esc(g['prompt_text'])}” ({esc(g['engine'])})</div>")
+        comp = ", ".join(g["now"]["competitors"]) or "—"
+        chgs.append(f"<div class='chg loss'>❌ <b>Lost:</b> “{esc(g['prompt_text'])}” ({esc(g['engine'])}) — cited last week, dropped now · competitors still named: {esc(comp)}</div>")
     if not chgs:
         chgs = ["<div class='chg'>No citation changes week-over-week.</div>" if not d["first_run"]
                 else "<div class='chg'>First stored run — diffs begin next week.</div>"]

@@ -123,7 +123,7 @@ def previous_run(conn, run_id: int, mode: str | None = None):
 
 def get_rows(conn, run_id: int) -> list:
     rows = []
-    for r in conn.execute("SELECT * FROM results WHERE run_id = ? ORDER BY id", (run_id,)):
+    for r in conn.execute("SELECT * FROM results WHERE run_id = ? ORDER BY rowid", (run_id,)):
         rows.append({
             "engine": r["engine"], "model": r["model"], "prompt_id": r["prompt_id"],
             "prompt_text": r["prompt_text"], "locale": r["locale"], "style": r["style"],
