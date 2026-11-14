@@ -69,8 +69,9 @@ def _fuzzy_position(text: str, alias: str):
             cand = re.sub(r"[._+-]", "", tok).lower()
             if cand == a:
                 continue  # exact pass already handled it
-            if len(cand) < len(a):
-                continue  # never fuzzy-match a truncation
+            # typos keep ~alias length: never shorter, at most +1 char longer
+            if not (len(a) <= len(cand) <= len(a) + 1):
+                continue
             if SequenceMatcher(None, cand, a).ratio() >= FUZZY_THRESHOLD:
                 return start, tok
     else:
@@ -79,7 +80,7 @@ def _fuzzy_position(text: str, alias: str):
             cand = "".join(re.sub(r"[._+-]", "", t) for _, t in window).lower()
             if cand == alias_joined:
                 continue
-            if len(cand) < len(alias_joined):
+            if not (len(alias_joined) <= len(cand) <= len(alias_joined) + 1):
                 continue
             if SequenceMatcher(None, cand, alias_joined).ratio() >= FUZZY_THRESHOLD:
                 return window[0][0], window[0][1]
