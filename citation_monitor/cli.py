@@ -13,14 +13,18 @@ TEMPLATE = None  # set at bottom to avoid a circular import with the template te
 def _print_summary(s: dict) -> None:
     print("")
     print("─" * 62)
-    print(f"Run complete  ·  week {s['week']}  ·  mode: {s['mode'].upper()}")
-    print(f"Engines: {', '.join(s['engines'])}")
-    print(f"Brand citation rate: {s['citation_rate']:.1f}%   share of voice: {s['sov']:.1f}%"
-          + (f"  (Δ {s['sov_delta']:+.1f} pts)" if s.get('sov_delta') else ""))
+    print(f"Run complete  ·  week {s.get('week')}  ·  mode: {str(s.get('mode', '')).upper()}")
+    if s.get("engines"):
+        print(f"Engines: {', '.join(s['engines'])}")
+    if "citation_rate" in s:
+        print(f"Brand citation rate: {s['citation_rate']:.1f}%   share of voice: {s['sov']:.1f}%"
+              + (f"  (Δ {s['sov_delta']:+.1f} pts)" if s.get('sov_delta') else ""))
     if s.get("top_competitor"):
         print(f"Top cited competitor: {s['top_competitor']}")
-    print(f"Changes: +{s.get('gained', 0)} gained / -{s.get('lost', 0)} lost")
-    print(f"Tokens used (est.): {s.get('tokens_est', 0):,}")
+    if s.get("gained") is not None:
+        print(f"Changes: +{s.get('gained', 0)} gained / -{s.get('lost', 0)} lost")
+    if s.get("tokens_est"):
+        print(f"Tokens used (est.): {s.get('tokens_est', 0):,}")
     print(f"Digest:  {s['md_path']}")
     print(f"         {s['html_path']}")
     print("─" * 62)
