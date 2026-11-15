@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Citation Monitor — know whether AI engines recommend you</title>
+  <meta name="description" content="Every Monday: an agent asks 36 real buyer questions across AI engines, reports who got cited — you or your competitors — and ships exactly 3 prioritized fixes. $19/mo, crypto-only.">
+  <link rel="canonical" href="https://itsxwang.github.io/citation-monitor/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%88%3C/text%3E%3C/svg%3E">
+  <!-- link previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Xion's Micro Tools">
+  <meta property="og:title" content="Citation Monitor — know whether AI engines recommend you">
+  <meta property="og:description" content="A weekly digest of who AI engines cite for your buyer questions — you or your competitors — with exactly 3 prioritized fixes. Real sample digest inside.">
+  <meta property="og:url" content="https://itsxwang.github.io/citation-monitor/">
+  <meta property="og:image" content="https://itsxwang.github.io/citation-monitor/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Citation Monitor — know whether AI engines recommend you">
+  <meta name="twitter:description" content="Weekly AI citation digest: 36 buyer questions × real engine answers, your share of voice vs competitors, exactly 3 fixes. $19/mo, pay in BTC/ETH/SOL.">
+  <meta name="twitter:image" content="https://itsxwang.github.io/citation-monitor/og-image.png">
+  <!-- dark mode: same pre-paint + toggle pattern as the store; shared cr.theme preference -->
+  <script>(function(){try{var t=localStorage.getItem("cr.theme");if(!t)t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <style>
+    :root {
+      --bg: #f8fafc; --surface: #ffffff; --ink: #0f172a; --muted: #64748b;
+      --line: #e2e8f0; --accent: #4f46e5; --accent-ink: #ffffff; --accent-soft: #eef2ff;
+      --good: #047857; --good-soft: #ecfdf5; --banner-ink: #92400e;
+      --warn-bg: #fffbeb; --warn-line: #f59e0b;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    [data-theme="dark"] {
+      --bg: #0b1220; --surface: #111a2e; --ink: #e2e8f0; --muted: #9fb0d0;
+      --line: #243350; --accent: #8ab4ff; --accent-ink: #0b1220; --accent-soft: #16233f;
+      --good: #34d399; --good-soft: #0f2e23; --banner-ink: #fbbf24;
+      --warn-bg: #2a2410; --warn-line: #d97706;
+    }
+    /* no-JS visitors still get dark mode from the OS preference */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --bg: #0b1220; --surface: #111a2e; --ink: #e2e8f0; --muted: #9fb0d0;
+        --line: #243350; --accent: #8ab4ff; --accent-ink: #0b1220; --accent-soft: #16233f;
+        --good: #34d399; --good-soft: #0f2e23; --banner-ink: #fbbf24;
+        --warn-bg: #2a2410; --warn-line: #d97706;
+      }
+    }
+    .theme-toggle {
+      border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+      border-radius: 999px; width: 34px; height: 34px; font-size: 1rem; line-height: 1;
+      cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+      flex: 0 0 auto; transition: border-color .15s, background .15s;
+    }
+    .theme-toggle:hover { border-color: var(--accent); }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.55; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+    .nav { display: flex; align-items: center; gap: 18px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .nav .brand { font-weight: 700; letter-spacing: -0.02em; }
+    .nav .spacer { flex: 1; }
+    .nav a { color: var(--muted); font-size: .95rem; }
+    .nav a:hover { color: var(--ink); }
+    footer { border-top: 1px solid var(--line); margin-top: 60px; padding: 24px 0 40px; color: var(--muted); font-size: .9rem; }
+    .hero { padding: 54px 0 30px; max-width: 760px; }
+    .hero h1 { font-size: 2.3rem; line-height: 1.15; margin: 0 0 12px; letter-spacing: -0.03em; }
+    .hero p { font-size: 1.1rem; color: var(--muted); margin: 0 0 22px; }
+    .btn { display: inline-block; background: var(--accent); color: var(--accent-ink); padding: 10px 18px; border-radius: 10px; font-weight: 600; border: none; font-size: 1rem; cursor: pointer; text-align: center; }
+    .btn:hover { text-decoration: none; filter: brightness(1.08); }
+    .btn.ghost { background: var(--surface); color: var(--accent); border: 1px solid var(--line); }
+    .btn.small { padding: 7px 12px; font-size: .9rem; }
+    .banner { margin-top: 18px; padding: 10px 14px; border: 1px solid var(--warn-line); background: var(--warn-bg); border-radius: 10px; font-size: .9rem; }
+    .banner strong { color: var(--banner-ink, #92400e); }
+    .section { margin: 46px 0; }
+    .section h2 { font-size: 1.4rem; letter-spacing: -0.02em; }
+    .section .sub { color: var(--muted); margin: -6px 0 18px; font-size: .98rem; }
+    .steps { counter-reset: step; list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+    .steps li { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+    .steps li::before {
+      counter-increment: step; content: counter(step); display: inline-grid; place-items: center;
+      width: 26px; height: 26px; background: var(--accent-soft); color: var(--accent);
+      border-radius: 50%; font-weight: 700; margin-right: 10px; font-size: .9rem;
+    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; margin: 26px 0; }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+    .card h3 { margin: 0; font-size: 1.15rem; }
+    .card p { margin: 0; color: var(--muted); font-size: .95rem; flex: 1; }
+    .price { font-weight: 700; font-size: 1.05rem; }
+    .price small { color: var(--muted); font-weight: 400; }
+    .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .muted { color: var(--muted); }
+    .hint { color: var(--muted); font-size: .85rem; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 26px 0; }
+    .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+    .stat .n { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; }
+    .stat .l { color: var(--muted); font-size: .82rem; }
+    .faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; margin: 10px 0; }
+    .faq summary { cursor: pointer; font-weight: 600; }
+    .faq p { color: var(--muted); font-size: .95rem; margin: 8px 0 0; }
+    .islist { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin: 18px 0; }
+    .islist .card ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: .95rem; }
+    .islist .card li { margin: 6px 0; }
+    .tick li::marker { content: "✓  "; color: var(--good); }
+    .cross li::marker { content: "✕  "; color: #dc2626; }
+    code { font-family: var(--mono); font-size: .85em; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: .05rem .3rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav">
+      <span class="brand">📊 Citation Monitor</span>
+      <span class="spacer"></span>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+      <a href="#how">How it works</a>
+      <a href="#sample">Sample</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://itsxwang.github.io/cash-register/">Store</a>
+    </nav>
+
+    <div class="hero">
+      <h1>Know whether AI engines recommend you — or your competitors.</h1>
+      <p>A weekly digest: <strong>36 real buyer questions</strong> asked to real AI engines,
+         every citation parsed for <strong>you and your competitors</strong>, your
+         <strong>share of voice</strong> scored week over week — and
+         <strong>exactly 3 prioritized fixes</strong>.</p>
+      <div class="row">
+        <a class="btn" href="https://itsxwang.github.io/cash-register/checkout.html?item=citation-monitor-weekly-digest">Start monitoring — $19/mo</a>
+        <a class="btn ghost" href="digest-2026-W46.html">Read the live sample digest →</a>
+      </div>
+      <div class="banner"><strong>Pay in BTC / ETH (Base) / SOL</strong> — no card needed, no accounts, cancel by email.</div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="n">0 / 72</div><div class="l">answers that named the monitored brand (baseline week)</div></div>
+      <div class="stat"><div class="n">25</div><div class="l">answers citing BitPay — the top competitor</div></div>
+      <div class="stat"><div class="n">72</div><div class="l">real engine answers analyzed (36 questions × 2 engines)</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">prioritized fixes in every digest</div></div>
+    </div>
+
+    <section class="section" id="how">
+      <h2>How it works</h2>
+      <p class="sub">One monitored brand. 36 buyer-phrase prompts you help curate. Zero scraping — official APIs only.</p>
+      <ol class="steps">
+        <li><strong>An agent asks your 36 buyer questions</strong> across AI engines (Groq-hosted gpt-oss-120b and Gemini Flash today) — phrased the way buyers actually ask: “best tool for X”, “X alternatives”, “how do I solve X”.</li>
+        <li><strong>Every answer is parsed for citations</strong> — exact and alias matching for your brand and each tracked competitor, with the exact prompt and snippet kept as a receipt.</li>
+        <li><strong>Your share of voice is scored</strong> per question, per engine, and week over week — gains, losses, and competitor movement are diffed against last week.</li>
+        <li><strong>Every Monday you get the digest</strong> — page + email — ending in exactly 3 prioritized fixes with the data that justifies each one.</li>
+      </ol>
+    </section>
+
+    <section class="section" id="sample">
+      <h2>A real digest, not a mockup</h2>
+      <p class="sub">Below is the live baseline digest for our own demo brand — real engines, real answers, first week.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>The gap is the product</h3>
+          <p>In 72 answers, the monitored brand was named <strong>0 times</strong>. BitPay appeared in <strong>25</strong>, Coinbase Commerce in <strong>16</strong>. Most founders have no idea this gap exists in their category.</p>
+        </div>
+        <div class="card">
+          <h3>Every citation has a receipt</h3>
+          <p>Each competitor mention shows <strong>the exact prompt and answer snippet</strong> that earned it — no black-box scores. Request Finance: 2 citations, Cryptio: 1, all traceable.</p>
+        </div>
+        <div class="card">
+          <h3>Exactly 3 fixes, ranked</h3>
+          <p>Like <em>“Turn ‘BitPay alternatives’ prompts into comparison-page wins”</em> — with the numbers that justify the priority. Never a generic 12-point audit.</p>
+        </div>
+      </div>
+      <p><a class="btn ghost" href="digest-2026-W46.html">Open the full digest →</a></p>
+      <p class="hint">About the demo brand: “StableDesk” is our fictional demo brand. Real engines have never heard of it — which is exactly why it scores 0 while real competitors get cited. Your brand has history; week 2 shows your trend.</p>
+    </section>
+
+    <section class="section" id="pricing">
+      <h2>Pricing</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Single brand</h3>
+          <p>36 buyer-phrase prompts · 2 engines · weekly Monday digest · 3 prioritized fixes · citation history &amp; trends.</p>
+          <div class="price">$19 <small>/ month</small></div>
+          <div class="row"><a class="btn" href="https://itsxwang.github.io/cash-register/checkout.html?item=citation-monitor-weekly-digest">Subscribe — $19/mo</a></div>
+          <p class="hint">Pay in BTC / ETH (Base) / SOL — no card needed. Cancel by email anytime. 7-day refund.</p>
+        </div>
+        <div class="card">
+          <h3>Agency</h3>
+          <p>3 brands · everything in single-brand · per-brand digests — resell each one at 2–3× if you serve clients.</p>
+          <div class="price">$39 <small>/ month</small></div>
+          <div class="row"><a class="btn" href="https://itsxwang.github.io/cash-register/checkout.html?item=citation-monitor-agency">Subscribe — $39/mo</a></div>
+          <p class="hint">Same crypto checkout. White-label reports on the roadmap.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="honesty">
+      <h2>What this is and isn't</h2>
+      <div class="islist">
+        <div class="card">
+          <h3>It is</h3>
+          <ul class="tick">
+            <li>Weekly monitoring of what AI assistants answer to your buyers' questions.</li>
+            <li>Scores built from <strong>official free-tier APIs</strong> (Groq, Gemini) — no scraping, ever.</li>
+            <li>Exactly 3 prioritized recommendations, each backed by this week's data.</li>
+            <li>Fully disclosed methodology — your exact prompts and scoring math ship inside every digest.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>It isn't</h3>
+          <ul class="cross">
+            <li>A direct tap into ChatGPT or Perplexity consumer apps — LLM answers via official APIs are <strong>proxies</strong> for those engines. That's disclosed in every digest.</li>
+            <li>An SEO tool — we monitor AI answer citations, not Google rankings.</li>
+            <li>A guarantee of citations — it's a measurement and fixing loop, not magic.</li>
+            <li>A data broker — we track only the brand and competitors you list in your config.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="hint">If a proxy approach is a dealbreaker for you, wait until engine-native monitoring APIs mature — we'd rather say it plainly than oversell it. Transparency is the product's whole style.</p>
+    </section>
+
+    <section class="section faq" id="faq">
+      <h2>FAQ</h2>
+      <details>
+        <summary>Which AI engines do you monitor?</summary>
+        <p>Today: Groq-hosted <code>gpt-oss-120b</code> and Google <code>Gemini Flash</code> (official free-tier APIs — that's how the price stays at $19). Perplexity's Sonar is next when API budget allows; the engine list is a config value, not a promise.</p>
+      </details>
+      <details>
+        <summary>How is the digest delivered?</summary>
+        <p>A private page plus an email every Monday. The same digest format as the <a href="digest-2026-W46.html">public sample</a>: headline numbers, per-engine breakdown, competitor receipts, gains/losses, and the 3 fixes.</p>
+      </details>
+      <details>
+        <summary>Can I cancel?</summary>
+        <p>Yes — reply to any digest email. No retention flows, no dark patterns. Crypto billing means no card to fight with.</p>
+      </details>
+      <details>
+        <summary>Does it work for non-English markets?</summary>
+        <p>The engine prompts are locale-aware today (the sample already tracks Spanish-language buyer questions). Curated locale packs for ES / PT / DE are on the roadmap — non-US founders are exactly who this is built for.</p>
+      </details>
+      <details>
+        <summary>What do the "3 fixes" actually look like?</summary>
+        <p><a href="digest-2026-W46.html">See the sample digest</a> — each fix has a priority, the data behind it, concrete actions, and the exact prompts it targets. E.g. “publish a ‘X vs BitPay’ comparison page with a quoteable feature/price table”.</p>
+      </details>
+      <details>
+        <summary>Refunds?</summary>
+        <p>7 days, no questions — refunds go back on-chain to the sending address. Message with your order id.</p>
+      </details>
+    </section>
+
+    <footer>
+      Xion's Micro Tools · <a href="https://itsxwang.github.io/cash-register/">Store</a> ·
+      <a href="https://github.com/itsxwang/citation-monitor">Code</a> ·
+      contact: xion.dev7@gmail.com · static page, crypto-only, zero paid services
+    </footer>
+  </div>
+  <script>
+    (function () {
+      var t = document.getElementById("theme-toggle");
+      t.addEventListener("click", function () {
+        var cur = document.documentElement.getAttribute("data-theme") || "light";
+        var next = cur === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        try { localStorage.setItem("cr.theme", next); } catch (e) {}
+        t.textContent = next === "dark" ? "☀️" : "🌙";
+      });
+      var cur = document.documentElement.getAttribute("data-theme");
+      if (cur === "dark") t.textContent = "☀️";
+    })();
+  </script>
+</body>
+</html>

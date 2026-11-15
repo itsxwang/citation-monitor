@@ -35,17 +35,36 @@ export GEMINI_API_KEY="AIza..."
       and the 30+ prompts using the buyer phrasing your customers actually say.
 - [ ] Set `run.output_dir` / `run.storage` if you host multiple brands on one machine.
 
-## 4. Schedule the weekly cron (10 min)
+## 4. Schedule the weekly cron (10 min) — human step only
 
-Same weekday every week — diffs and trend assume weekly cadence.
+Engine keys live in `~/.citation-monitor-env` (never in the crontab, never committed):
 
-```cron
-# Mondays 08:30 — live run
-30 8 * * 1 cd /home/xion/venture-01-citation-monitor && /usr/bin/env python3 -m citation_monitor run --config mybrand.yaml >> cron.log 2>&1
+```bash
+# ~/.citation-monitor-env  (chmod 600)
+export GROQ_API_KEY="gsk_..."
+export GEMINI_API_KEY="AIza..."
 ```
 
-- [ ] `crontab -e` and add the line above (adjust path + python).
-- [ ] After week 2, confirm the digest shows "Δ vs last week" values (not "first run").
+The runner is `scripts/weekly.sh`: it cds to the repo, sources the env file, and runs
+the monitor. The digest lands in `output/digest-<ISOweek>.md` + `.html`
+(e.g. `output/digest-2026-W46.html`), plus SQLite history in `data/`.
+
+**Exact crontab lines to install** (`crontab -e` — same weekday every week; diffs and
+trend assume weekly cadence):
+
+```cron
+# citation-monitor — weekly Monday run (engine keys sourced from ~/.citation-monitor-env)
+30 8 * * 1 /home/xion/venture-01-citation-monitor/scripts/weekly.sh >> /home/xion/venture-01-citation-monitor/cron.log 2>&1
+```
+
+Optional — republish the public site (landing + updated public sample digest) after the run:
+
+```cron
+40 8 * * 1 /home/xion/venture-01-citation-monitor/scripts/publish_site.sh >> /home/xion/venture-01-citation-monitor/cron.log 2>&1
+```
+
+Only publish digests meant to be public — paying customers' digests go out as private
+pages/email, never to the public URL.
 
 ## 5. Publish digest pages to GitHub Pages (20 min)
 
