@@ -21,10 +21,10 @@ competitors:
 # Engine models are editable — check provider docs for current free-tier names.
 engines:
   groq:
-    model: llama-3.1-8b-instant
+    model: openai/gpt-oss-120b
     enabled: true
   gemini:
-    model: gemini-2.5-flash
+    model: gemini-flash-latest
     enabled: true
   openrouter:
     model: meta-llama/llama-3.1-8b-instruct:free
