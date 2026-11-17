@@ -1,9 +1,11 @@
 # citation-monitor — Weekly AI Visibility Digest
 
+**Live product page:** https://itsxwang.github.io/citation-monitor/ · **Sample digest (real engine data):** https://itsxwang.github.io/citation-monitor/digest-2026-W46.html · **Order:** https://itsxwang.github.io/cash-register/checkout.html?item=citation-monitor-weekly-digest
+
 **Does ChatGPT, Perplexity or Gemini name your product when buyers ask?** Most founders
 have no idea. Big monitoring tools charge $29–$399/mo and are built for marketing teams.
 This is the under-served wedge: a **simple $19/mo weekly digest for indie SaaS founders** —
-payable in **BTC / SOL / USDT** (no Stripe, no PayPal), built for founders outside the US
+payable in **BTC / ETH / SOL** (no Stripe, no PayPal), built for founders outside the US
 where crypto payment is natural.
 
 Every week the tool asks your buyer-phrase questions to AI answer engines (free tiers of
@@ -106,7 +108,7 @@ $19/mo revenue. **Gross margin ≈ 99%+**, and the founder's own demo/dev runs a
 ## Revenue (crypto-only by design)
 
 - $19/mo per brand — weekly digest delivered as a private page (GitHub Pages link) or email.
-- Payment: BTC / SOL / USDT via the shared crypto checkout project (see
+- Payment: BTC / ETH / SOL via the shared crypto checkout project (see
   LAUNCH_CHECKLIST.md for wiring). No Stripe/PayPal — deliberate.
 - Renewal is manual-ish at this scale: a payment reminder with last week's digest as the hook.
 
