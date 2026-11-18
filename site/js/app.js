@@ -10,7 +10,16 @@
   /* ---- theme toggle (same pattern as the store: localStorage "cr.theme") ---- */
   var toggle = document.getElementById("theme-toggle");
   function syncToggle() {
-    if (toggle) toggle.textContent = (docEl.getAttribute("data-theme") || "light") === "dark" ? "☀️" : "🌙";
+    if (!toggle) return;
+    var dark = (docEl.getAttribute("data-theme") || "light") === "dark";
+    if (toggle.querySelector(".knob")) {
+      /* pill switch: CSS drives the knob from aria-pressed */
+      toggle.setAttribute("aria-pressed", dark ? "true" : "false");
+      toggle.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+    } else {
+      /* legacy emoji button (other surfaces) */
+      toggle.textContent = dark ? "☀️" : "🌙";
+    }
   }
   if (toggle) {
     toggle.addEventListener("click", function () {

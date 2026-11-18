@@ -25,20 +25,26 @@
   <!-- self-hosted fonts (OFL, site/fonts/) — preload only the 2 above-the-fold weights -->
   <link rel="preload" href="fonts/space-grotesk-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=2">
   <script src="js/app.js" defer></script>
 </head>
 <body>
   <div class="wrap">
     <nav class="nav">
-      <span class="brand">Citation Monitor</span>
+      <a class="brand" href="index.html">📈 Citation Monitor</a>
       <span class="spacer"></span>
-      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
       <a href="#how">How it works</a>
       <a href="#sample">Sample</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
       <a href="https://itsxwang.github.io/cash-register/">Store</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode">
+        <span class="knob" aria-hidden="true">
+          <svg class="i-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          <svg class="i-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+      </button>
+      <a class="btn navcta" href="https://itsxwang.github.io/cash-register/checkout.html?item=citation-monitor-weekly-digest">Get monitoring</a>
     </nav>
 
     <!-- hero: content paints immediately (no reveal); 3D field lazy-loads into fixed-height art -->
@@ -240,13 +246,22 @@
     </section>
 
     <footer>
-      <div class="flinks">
-        <a href="https://itsxwang.github.io/cash-register/">Store</a>
-        <a href="https://itsxwang.github.io/cash-register/status.html">Order status</a>
-        <a href="digest-2026-W46.html">Sample digest</a>
-        <a href="https://github.com/itsxwang/citation-monitor">Code</a>
+      <div class="foot-cols">
+        <div>
+          <span class="brand">📈 Citation Monitor</span>
+          <p class="muted">Weekly AI-citation digests: who engines recommend, your share of voice, exactly 3 prioritized fixes. Crypto-only, $19/mo.</p>
+        </div>
+        <nav class="footnav" aria-label="Site">
+          <a href="https://itsxwang.github.io/cash-register/">Store</a>
+          <a href="https://itsxwang.github.io/cash-register/status.html">Order status</a>
+          <a href="digest-2026-W46.html">Sample digest</a>
+          <a href="https://github.com/itsxwang/citation-monitor">Code</a>
+        </nav>
+        <div>
+          <span class="muted">Support: <a href="mailto:xion.dev7@gmail.com">xion.dev7@gmail.com</a></span><br>
+          <span class="muted">crypto-only: BTC / ETH / SOL · static site, zero paid services</span>
+        </div>
       </div>
-      Xion's Micro Tools · support: <a href="mailto:xion.dev7@gmail.com">xion.dev7@gmail.com</a> · crypto-only · static site, zero paid services
     </footer>
   </div>
 </body>
