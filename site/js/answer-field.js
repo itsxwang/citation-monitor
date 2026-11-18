@@ -48,7 +48,7 @@ export function initField() {
   field.add(globe);
 
   // tilted orbit ring — circle of line segments in the XZ plane
-  const R = 1.95, SEG = 96, pos = [];
+  const R = 1.8, SEG = 96, pos = [];
   for (let i = 0; i < SEG; i++) {
     const a0 = (i / SEG) * Math.PI * 2, a1 = ((i + 1) / SEG) * Math.PI * 2;
     pos.push(Math.cos(a0) * R, 0, Math.sin(a0) * R, Math.cos(a1) * R, 0, Math.sin(a1) * R);
@@ -82,6 +82,11 @@ export function initField() {
     const w = holder.clientWidth || 1, h = holder.clientHeight || 1;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
+    /* Fit the whole orbit ring: the ring sweeps ~2.1 world-units (with
+     * perspective) horizontally, so pull the camera back on narrow columns.
+     * Without this the ring clips at the canvas edges while it spins. */
+    const halfTan = Math.tan((camera.fov * Math.PI) / 360);
+    camera.position.z = Math.max(5.0, 2.15 / (halfTan * Math.max(camera.aspect, 0.6)));
     camera.updateProjectionMatrix();
   }
   resize();

@@ -112,7 +112,7 @@
     var kick = function () {
       if (started) return;
       started = true;
-      import("./answer-field.js")
+      import("./answer-field.js?v=2")
         .then(function (mod) { mod.initField(); })
         .catch(function () { /* SVG fallback stays */ });
     };
