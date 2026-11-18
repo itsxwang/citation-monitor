@@ -46,6 +46,26 @@
       </button>
       <a class="btn navcta" href="https://itsxwang.github.io/cash-register/checkout.html?item=citation-monitor-weekly-digest">Get monitoring</a>
     </nav>
+    <script>
+      /* Pill-toggle resilience, inlined on purpose: a stale cached app.js may
+         still rewrite textContent (the legacy emoji pattern) and wipe the knob.
+         This restores it in the same microtask and mirrors data-theme to
+         aria-pressed — the CSS knob slide needs no other JS. */
+      (function () {
+        var b = document.getElementById("theme-toggle");
+        if (!b) return;
+        var knob = b.innerHTML;
+        function sync() {
+          if (!b.querySelector(".knob")) b.innerHTML = knob;
+          var dark = document.documentElement.getAttribute("data-theme") === "dark";
+          b.setAttribute("aria-pressed", dark ? "true" : "false");
+          b.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+        }
+        new MutationObserver(sync).observe(b, { childList: true });
+        new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+        sync();
+      })();
+    </script>
 
     <!-- hero: content paints immediately (no reveal); 3D field lazy-loads into fixed-height art -->
     <header class="hero">
