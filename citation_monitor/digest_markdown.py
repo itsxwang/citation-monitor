@@ -35,7 +35,11 @@ def render_md(brand, week, mode, score, d, recs, history_rows, snippets) -> str:
     if not d["first_run"] and prev:
         cite_line += f" — prev {_pct(prev['citation_rate'])} ({d['citation_delta']:+.1f} pts)"
     L.append(f"- **Brand citation rate: {cite_line}**")
-    L.append(f"- Engines monitored: {', '.join(score['engines'].keys())} — {score['n_rows']} answers analyzed")
+    analyzed = f"{score['n_rows']} answers analyzed"
+    if score.get("n_failed"):
+        analyzed += (f" of {score['n_attempted']} attempted "
+                     f"({score['n_failed']} engine calls failed, excluded from scores)")
+    L.append(f"- Engines monitored: {', '.join(score['engines'].keys())} — {analyzed}")
     L.append(f"- Approx. tokens consumed this run: {score['tokens_est']:,}")
     L.append("")
 

@@ -97,6 +97,10 @@ def _delta_chip(delta: float, invert: bool = False) -> str:
 def render_html(brand, week, mode, score, d, recs, history_rows, snippets) -> str:
     prev = d.get("prev_summary") or {}
     n_cited_prompts = sum(1 for p in score["prompts"] if p["brand_any"])
+    answers_note = ", ".join(score["engines"].keys())
+    if score.get("n_failed"):
+        answers_note = (f"of {score['n_attempted']} attempted · "
+                        f"{score['n_failed']} failed (excluded)")
 
     engine_rows = "".join(
         f"<tr><td><b>{esc(k)}</b></td><td><code>{esc(v['model'])}</code></td>"
@@ -190,7 +194,7 @@ def render_html(brand, week, mode, score, d, recs, history_rows, snippets) -> st
       <div class="delta">{n_cited_prompts}/{score['n_prompts']} prompts named {esc(brand.name)}{(' · ' + cite_delta_html) if cite_delta_html else ''}</div></div>
     <div class="card"><div class="label">Answers analyzed</div>
       <div class="value">{score['n_rows']}</div>
-      <div class="delta">{esc(', '.join(score['engines'].keys()))}</div></div>
+      <div class="delta">{esc(answers_note)}</div></div>
     <div class="card trend"><div class="label">Score trend (share of voice by week)</div>
       {_sparkline([h['sov'] for h in history_rows])}</div>
   </div>

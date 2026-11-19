@@ -47,6 +47,9 @@ def system_prompt(locale: str = "en") -> str:
 class BaseEngine:
     name = "base"
     env_keys: tuple = ()
+    # Minimum seconds between two calls to this engine. Free tiers cap
+    # requests-per-minute; bursting 36 prompts at once triggers 429s.
+    min_interval: float = 0.0
 
     def __init__(self, model: str, timeout: float = 45.0):
         self.model = model
@@ -88,7 +91,7 @@ class OpenAICompatEngine(BaseEngine):
         headers = {"Authorization": f"Bearer {key}", **self.extra_headers}
         try:
             data = post_json(self.endpoint, headers=headers, json_body=body,
-                             timeout=self.timeout)
+                             timeout=self.timeout, retries=2)
         except Exception as exc:
             raise EngineError(f"[{self.name}] request failed: {exc}") from exc
         try:
@@ -119,6 +122,9 @@ class PerplexityEngine(OpenAICompatEngine):
 class GeminiEngine(BaseEngine):
     name = "gemini"
     env_keys = ("GEMINI_API_KEY", "GOOGLE_API_KEY")
+    # Gemini's free tier is ~10-15 requests/minute: space calls out instead of
+    # letting the 429 retry loop eat the run.
+    min_interval = 7.0
     endpoint = ("https://generativelanguage.googleapis.com/v1beta/models/"
                 "{model}:generateContent")
 
@@ -139,7 +145,7 @@ class GeminiEngine(BaseEngine):
         }
         try:
             data = post_json(url, headers={"x-goog-api-key": key}, json_body=body,
-                             timeout=self.timeout)
+                             timeout=self.timeout, retries=1)
         except Exception as exc:
             raise EngineError(f"[{self.name}] request failed: {exc}") from exc
         try:
@@ -199,9 +205,15 @@ def _demo_engines(cfg) -> list:
     return engines
 
 
-def build_live_engines(cfg, log=print) -> list:
+def _log(*args, **kwargs):
+    kwargs.setdefault("flush", True)
+    print(*args, **kwargs)
+
+
+def build_live_engines(cfg, log=None) -> list:
     """Build engines that have keys configured. Skips missing ones with a clear
     log line. Returns [] when nothing is available."""
+    log = log or _log
     engines = []
     for ename, ecfg in cfg.engines.items():
         cls = LIVE_REGISTRY.get(ename)
@@ -217,13 +229,14 @@ def build_live_engines(cfg, log=print) -> list:
     return engines
 
 
-def build_engines(cfg, demo: bool, log=print):
+def build_engines(cfg, demo: bool, log=None):
     """Returns (engines, mode, previous_fixture_or_None).
 
     - demo=True  -> fixture replay engines (+ previous-week fixture for diff)
     - keys exist -> live engines only (engines without keys are skipped)
     - no keys    -> graceful degrade to demo mode with a clear log message
     """
+    log = log or _log
     if demo:
         log("[demo] --demo flag set: replaying recorded fixtures (no API calls)")
         return _demo_engines(cfg), "demo", _load_fixture("demo_previous.json")

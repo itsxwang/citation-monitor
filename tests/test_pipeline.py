@@ -36,7 +36,11 @@ class TestDemoPipelineEndToEnd(unittest.TestCase):
             # re-running demo same week must NOT duplicate the seeded previous run
             run_pipeline(cfg, demo=True, log=lambda *a, **k: None)
             conn2 = store.connect(cfg.run.storage)
-            self.assertEqual(len(store.history(conn2)), 3)  # prev + 2 identical week runs
+            runs2 = store.history(conn2)
+            # trend is one row per week: the second same-week run replaces the
+            # first in the trend, it does not add a duplicate row
+            self.assertEqual(len(runs2), 2)  # prev week + this week
+            self.assertGreater(runs2[-1]["id"], runs[-1]["id"])  # latest run wins
 
             # report re-renders from storage without any engine calls
             rep = report_pipeline(cfg, log=lambda *a, **k: None)

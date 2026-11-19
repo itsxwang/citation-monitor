@@ -17,4 +17,4 @@ else
 fi
 
 mkdir -p output
-python3 -m citation_monitor run --config "${1:-brand.yaml}"
+PYTHONUNBUFFERED=1 python3 -m citation_monitor run --config "${1:-brand.yaml}"

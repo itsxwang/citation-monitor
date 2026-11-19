@@ -137,13 +137,22 @@ def get_rows(conn, run_id: int) -> list:
 
 
 def history(conn, mode: str | None = None, limit: int = 12) -> list:
+    """Latest run per week, oldest → newest (several runs can share a week
+    during testing; the trend table should show each week once)."""
     q = "SELECT id, week, created_at, mode, citation_rate, sov FROM runs"
     args = []
     if mode:
         q += " WHERE mode = ?"
         args.append(mode)
-    q += " ORDER BY id DESC LIMIT ?"
-    args.append(limit)
-    out = list(conn.execute(q, args))
+    q += " ORDER BY id DESC"
+    seen = set()
+    out = []
+    for row in conn.execute(q, args):
+        if row["week"] in seen:
+            continue
+        seen.add(row["week"])
+        out.append(row)
+        if len(out) >= limit:
+            break
     out.reverse()
     return out

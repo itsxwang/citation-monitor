@@ -17,20 +17,27 @@ def _sov_row(brand: int, n_comp: int):
 
 
 def score_run(rows: list) -> dict:
-    """rows: list of result dicts (see store.get_rows / pipeline building)."""
-    n_rows = len(rows)
-    cited = [r for r in rows if r["brand_mentioned"]]
+    """rows: list of result dicts (see store.get_rows / pipeline building).
+
+    Rows whose engine call errored are excluded from every metric: a failed
+    request is not evidence the brand was absent, so counting it would
+    understate the citation rate and share of voice.
+    """
+    n_attempted = len(rows)
+    valid = [r for r in rows if not r.get("error") and (r.get("raw_text") or "").strip()]
+    n_rows = len(valid)
+    cited = [r for r in valid if r["brand_mentioned"]]
     citation_rate = (len(cited) / n_rows) if n_rows else 0.0
 
     sov_values = []
-    for r in rows:
+    for r in valid:
         v = _sov_row(1 if r["brand_mentioned"] else 0, len(r["competitors"]))
         if v is not None:
             sov_values.append(v)
     sov = (sum(sov_values) / len(sov_values) * 100.0) if sov_values else 0.0
 
     per_engine = {}
-    for r in rows:
+    for r in valid:
         per_engine.setdefault(r["engine"], []).append(r)
     engines = {}
     for ename, erows in sorted(per_engine.items()):
@@ -46,7 +53,7 @@ def score_run(rows: list) -> dict:
 
     # aggregate by prompt (across engines)
     per_prompt = {}
-    for r in rows:
+    for r in valid:
         p = per_prompt.setdefault(r["prompt_id"], {
             "prompt_id": r["prompt_id"], "prompt_text": r["prompt_text"],
             "locale": r["locale"], "style": r["style"], "engines": [],
@@ -69,7 +76,7 @@ def score_run(rows: list) -> dict:
         })
 
     comp_counts = {}
-    for r in rows:
+    for r in valid:
         for c in r["competitors"]:
             comp_counts[c["name"]] = comp_counts.get(c["name"], 0) + 1
     competitors = dict(sorted(comp_counts.items(), key=lambda kv: -kv[1]))
@@ -86,6 +93,8 @@ def score_run(rows: list) -> dict:
     return {
         "n_prompts": len(prompt_list),
         "n_rows": n_rows,
+        "n_attempted": n_attempted,
+        "n_failed": n_attempted - n_rows,
         "citation_rate": citation_rate * 100.0,
         "sov": sov,
         "engines": engines,

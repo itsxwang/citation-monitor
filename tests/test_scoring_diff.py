@@ -41,6 +41,20 @@ class TestScoring(unittest.TestCase):
         self.assertAlmostEqual(s["engines"]["gemini"]["citation_rate"], 0.0)
         self.assertAlmostEqual(s["engines"]["groq"]["sov"], 50.0)
 
+    def test_failed_calls_are_excluded_from_scores(self):
+        """A 429/503 is not evidence the brand was absent: keep it out of metrics."""
+        failed_429 = dict(row(brand=False, comps=("BitPay",)))
+        failed_429.update({"raw_text": "", "error": "[gemini] 429"})
+        failed_503 = dict(row(brand=False, comps=()))
+        failed_503.update({"raw_text": "", "error": "[gemini] 503"})
+        rows = [row(brand=True, comps=("BitPay",)), failed_429, failed_503]
+        s = score_run(rows)
+        self.assertEqual(s["n_rows"], 1)
+        self.assertEqual(s["n_attempted"], 3)
+        self.assertEqual(s["n_failed"], 2)
+        self.assertAlmostEqual(s["citation_rate"], 100.0)
+        self.assertAlmostEqual(s["engines"]["groq"]["n"], 1)
+
     def test_prompt_aggregation_and_styles(self):
         rows = [
             row(prompt="p1", style="pricing", brand=False, comps=("BitPay",)),

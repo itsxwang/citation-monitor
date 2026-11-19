@@ -1,6 +1,7 @@
 """Pipeline orchestration: engines -> analysis -> storage -> diff -> digest."""
 from __future__ import annotations
 
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -11,6 +12,13 @@ from .digest_markdown import render_md
 from .engines import EngineError, build_engines, system_prompt
 from .matching import Entity, detect_entities, extract_snippet
 from .prompts import build_prompts
+
+
+def _log(*args, **kwargs):
+    """Unbuffered default logger: cron redirects stdout to a file, and buffered
+    progress makes a long weekly run look hung."""
+    kwargs.setdefault("flush", True)
+    print(*args, **kwargs)
 from .recommendations import build_recommendations
 
 
@@ -43,11 +51,21 @@ def _analyze_row(row: dict, entities: list) -> dict:
     return row
 
 
-def _run_engine_calls(engines, prompts, cfg, log=print) -> list:
+def _run_engine_calls(engines, prompts, cfg, log=_log) -> list:
     entities = _entities(cfg)
     rows = []
     total = len(prompts) * len(engines)
     done = 0
+    last_call: dict = {}
+    # Circuit breaker: a dead network route or a down provider should not make
+    # the weekly run hammer 36 prompts × retries. After two consecutive
+    # non-rate-limit failures, stop calling that engine for the rest of the run
+    # and record the skipped prompts as errors (honest: excluded from scores).
+    fails: dict = {e.name: 0 for e in engines}
+    rate_fails: dict = {e.name: 0 for e in engines}
+    disabled: set = set()
+    FAIL_LIMIT = 2
+    RATE_LIMIT_STOP = 3
     for p in prompts:
         for e in engines:
             done += 1
@@ -57,13 +75,43 @@ def _run_engine_calls(engines, prompts, cfg, log=print) -> list:
                 "raw_text": "", "error": None,
                 "_brand_name": cfg.brand.name,
             }
+            if e.name in disabled:
+                row["error"] = "skipped: engine unavailable after repeated failures"
+                row["tokens_est"] = 0
+                _analyze_row(row, entities)
+                rows.append(row)
+                continue
+            interval = getattr(e, "min_interval", 0.0)
+            if interval:
+                wait = interval - (time.monotonic() - last_call.get(e.name, 0.0))
+                if wait > 0:
+                    time.sleep(wait)
             try:
                 text = e.ask(p.text, system_prompt(p.locale))
                 row["raw_text"] = text or ""
+                fails[e.name] = 0
+                rate_fails[e.name] = 0
             except EngineError as exc:
                 row["error"] = str(exc)
+                msg = str(exc).lower()
+                rate_limited = ("429" in msg or "too many requests" in msg
+                                or "rate limit" in msg)
+                if rate_limited:
+                    rate_fails[e.name] += 1
+                    if rate_fails[e.name] >= RATE_LIMIT_STOP and e.name not in disabled:
+                        disabled.add(e.name)
+                        log(f"  [warn] {e.name}: still rate-limited after "
+                            f"{RATE_LIMIT_STOP} tries — skipping its remaining prompts this run")
+                else:
+                    fails[e.name] += 1
+                    if fails[e.name] >= FAIL_LIMIT and e.name not in disabled:
+                        disabled.add(e.name)
+                        log(f"  [warn] {e.name}: {FAIL_LIMIT} consecutive failures — "
+                            f"skipping its remaining prompts this run")
                 if done <= 3 or done == total:
                     log(f"  [warn] {exc}")
+            finally:
+                last_call[e.name] = time.monotonic()
             row["tokens_est"] = (len(system_prompt(p.locale)) + len(p.text) + len(row["raw_text"])) // 4
             _analyze_row(row, entities)
             rows.append(row)
@@ -107,7 +155,7 @@ def _collect_snippets(rows, brand_name: str, limit_per_entity: int = 2) -> dict:
     return snippets
 
 
-def _write_digest(out_dir: str, week: str, brand, mode, score, d, recs, history_rows, snippets, log=print):
+def _write_digest(out_dir: str, week: str, brand, mode, score, d, recs, history_rows, snippets, log=_log):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     md_path = out / f"digest-{week}.md"
@@ -120,7 +168,7 @@ def _write_digest(out_dir: str, week: str, brand, mode, score, d, recs, history_
 
 
 def run_pipeline(cfg, demo: bool = False, out_dir: str | None = None,
-                 limit: int | None = None, log=print) -> dict:
+                 limit: int | None = None, log=_log) -> dict:
     prompts = build_prompts(cfg, limit if limit is not None else cfg.run.max_prompts)
     full_prompts = build_prompts(cfg)  # history seeding always uses the full set
     log(f"AI Answer Citation Monitor — weekly run for {cfg.brand.name!r} "
@@ -146,8 +194,8 @@ def run_pipeline(cfg, demo: bool = False, out_dir: str | None = None,
 
     rows = _run_engine_calls(engines, prompts, cfg, log=log)
     score = scoring.score_run(rows)
-    if score["errors"] and mode == "live":
-        log(f"  [warn] {len(score['errors'])}/{score['n_rows']} engine calls errored — see results in the digest")
+    if score["n_failed"] and mode == "live":
+        log(f"  [warn] {score['n_failed']}/{score['n_attempted']} engine calls errored — excluded from scoring")
 
     week = store.iso_week()
     meta = {
@@ -181,7 +229,7 @@ def run_pipeline(cfg, demo: bool = False, out_dir: str | None = None,
     return summary
 
 
-def report_pipeline(cfg, out_dir: str | None = None, log=print) -> dict:
+def report_pipeline(cfg, out_dir: str | None = None, log=_log) -> dict:
     conn = store.connect(cfg.run.storage)
     latest = store.latest_run(conn)
     if latest is None:
