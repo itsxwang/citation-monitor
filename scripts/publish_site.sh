@@ -35,8 +35,10 @@ cd "$WORK/wt"
 git checkout --quiet --orphan gh-pages-publish
 git rm -rf --quiet . >/dev/null 2>&1 || true
 
-cp -r "$ROOT/site/." .
+# Preserved live digests first, then site/ — files committed under site/ are the
+# source of truth and must win over older copies already on gh-pages.
 cp "$WORK"/digests/*.html . 2>/dev/null || true
+cp -r "$ROOT/site/." .
 touch .nojekyll   # serve files as-is; skip Jekyll processing
 
 git add -A

@@ -24,7 +24,9 @@ engines:
     model: openai/gpt-oss-120b
     enabled: true
   gemini:
-    model: gemini-flash-latest
+    # gemini-flash-latest shares the exhausted legacy free-tier pool (429);
+    # the 3.1 flash-lite pool is separate and responds in ~2s.
+    model: gemini-3.1-flash-lite
     enabled: true
   openrouter:
     model: meta-llama/llama-3.1-8b-instruct:free

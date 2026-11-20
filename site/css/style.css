@@ -69,10 +69,10 @@ a:hover { text-decoration: underline; }
 .hint { color: var(--muted); font-size: 13px; }
 .small { font-size: 14px; }
 
-/* nav: sticky translucent glass bar (Xion's Micro Tools family system).
-   .nav lives inside .wrap, so negative inline margins stretch the glass
-   full-bleed and matching padding-inline pulls content back into container. */
-.nav { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; min-height: 64px; margin-inline: calc(50% - 50vw); padding-block: 8px; padding-inline: calc(50vw - 50%); border-bottom: 1px solid var(--line); border-bottom: 1px solid color-mix(in srgb, currentColor 8%, transparent); background: var(--bg); background: color-mix(in srgb, var(--bg) 72%, transparent); -webkit-backdrop-filter: blur(12px) saturate(140%); backdrop-filter: blur(12px) saturate(140%); }
+/* nav: sticky translucent glass bar, contained in the reading column so it
+   can never widen the page (the old 50vw full-bleed trick overflowed by half
+   a scrollbar on desktop browsers). */
+.nav { position: sticky; top: 10px; z-index: 40; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; min-height: 64px; margin: 14px 0 0; padding: 8px 16px; border: 1px solid var(--line); border: 1px solid color-mix(in srgb, currentColor 8%, transparent); border-radius: 14px; background: var(--bg); background: color-mix(in srgb, var(--bg) 82%, transparent); -webkit-backdrop-filter: blur(12px) saturate(140%); backdrop-filter: blur(12px) saturate(140%); box-shadow: 0 12px 32px -22px rgba(2, 6, 23, .55); }
 .nav .brand { font-family: var(--head); font-weight: 700; letter-spacing: -0.02em; font-size: 20px; color: var(--ink); opacity: 1; text-decoration: none; }
 .nav .spacer { flex: 1; }
 .nav a:not(.btn) { color: var(--ink); opacity: .72; font-size: 14px; transition: opacity .16s ease; }
@@ -104,6 +104,9 @@ a:hover { text-decoration: underline; }
   .nav { gap: 8px 12px; }
   .nav .brand { width: 100%; }
   .nav a:not(.btn) { font-size: 13px; }
+  /* Both are one scroll away and repeated in the footer; hiding them keeps the
+     sticky bar to two rows on a phone. */
+  .nav a[href="#how"], .nav a[href="#faq"] { display: none; }
 }
 
 /* buttons */
@@ -284,3 +287,5 @@ footer a:hover { color: var(--ink); }
   .reveal { opacity: 1 !important; transform: none !important; }
   html { scroll-behavior: auto; }
 }
+
+:target { scroll-margin-top: 96px; }

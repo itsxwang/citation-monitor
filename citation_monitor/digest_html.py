@@ -81,6 +81,17 @@ tr:last-child td { border-bottom:none; }
 footer { margin-top:40px; border-top:1px solid var(--line); padding-top:14px;
          color:var(--muted); font-size:12.5px; }
 code { background:#eef0f6; border-radius:4px; padding:0 4px; }
+.tablewrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:10px; }
+.tablewrap table { border-radius:0; }
+@media (max-width: 600px) {
+  .wrap { padding: 24px 14px 48px; }
+  .cards { gap: 10px; }
+  .card { padding: 12px 13px; }
+  th, td { padding: 7px 8px; font-size: 12.5px; }
+  th { font-size: 10.5px; letter-spacing: .04em; }
+  .rec { padding: 14px 14px; }
+  .snippet { padding: 9px 12px; }
+}
 """
 
 
@@ -200,13 +211,13 @@ def render_html(brand, week, mode, score, d, recs, history_rows, snippets) -> st
   </div>
 
   <h2>Score trend</h2>
-  <table><tr><th>Week</th><th>Share of voice</th><th>Citation rate</th></tr>{trend_rows}</table>
+  <div class="tablewrap"><table><tr><th>Week</th><th>Share of voice</th><th>Citation rate</th></tr>{trend_rows}</table></div>
 
   <h2>Per-engine breakdown</h2>
-  <table><tr><th>Engine</th><th>Model</th><th>Answers</th><th>Brand cited</th><th>SOV</th></tr>{engine_rows}</table>
+  <div class="tablewrap"><table><tr><th>Engine</th><th>Model</th><th>Answers</th><th>Brand cited</th><th>SOV</th></tr>{engine_rows}</table></div>
 
   <h2>Which competitors got cited — and why</h2>
-  <table><tr><th>Competitor</th><th>Answers naming it</th><th>Δ vs last week</th></tr>{comp_rows}</table>
+  <div class="tablewrap"><table><tr><th>Competitor</th><th>Answers naming it</th><th>Δ vs last week</th></tr>{comp_rows}</table></div>
   {''.join(snips) if snips else ''}
 
   <h2>What changed this week</h2>
