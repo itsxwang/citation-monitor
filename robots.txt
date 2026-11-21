@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /cron.log
+
+Sitemap: https://itsxwang.github.io/citation-monitor/sitemap.xml
