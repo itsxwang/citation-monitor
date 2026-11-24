@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Citation Monitor — know whether AI engines recommend you</title>
+  <meta name="description" content="Every Monday: an agent asks 36 real buyer questions across AI engines, reports who got cited — you or your competitors — and ships exactly 3 prioritized fixes. $19/mo, crypto-only.">
+  <link rel="canonical" href="https://itsxwang.github.io/citation-monitor/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%88%3C/text%3E%3C/svg%3E">
+  <!-- link previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Xion's Micro Tools">
+  <meta property="og:title" content="Citation Monitor — know whether AI engines recommend you">
+  <meta property="og:description" content="A weekly digest of who AI engines cite for your buyer questions — you or your competitors — with exactly 3 prioritized fixes. Real sample digest inside.">
+  <meta property="og:url" content="https://itsxwang.github.io/citation-monitor/">
+  <meta property="og:image" content="https://itsxwang.github.io/citation-monitor/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Citation Monitor — know whether AI engines recommend you">
+  <meta name="twitter:description" content="Weekly AI citation digest: 36 buyer questions × real engine answers, your share of voice vs competitors, exactly 3 fixes. $19/mo, pay in BTC/ETH/SOL.">
+  <meta name="twitter:image" content="https://itsxwang.github.io/citation-monitor/og-image.png">
+  <!-- dark mode: same pre-paint + toggle pattern as the store; shared cr.theme preference -->
+  <script>(function(){try{var t=localStorage.getItem("cr.theme");if(!t)t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
+  <!-- self-hosted fonts (OFL, site/fonts/) — preload only the 2 above-the-fold weights -->
+  <link rel="preload" href="fonts/space-grotesk-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css?v=4">
+  <script src="js/app.js?v=3" defer></script>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav">
+      <a class="brand" href="index.html">📈 Citation Monitor</a>
+      <span class="spacer"></span>
+      <a href="#how">How it works</a>
+      <a href="#sample">Sample</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://itsxwang.github.io/cash-register/">Store</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode">
+        <span class="knob" aria-hidden="true">
+          <svg class="i-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          <svg class="i-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+      </button>
+      <a class="btn navcta" href="https://itsxwang.github.io/cash-register/checkout.html?item=citation-monitor-weekly-digest">Get monitoring</a>
+    </nav>
+    <script>
+      /* Pill-toggle resilience, inlined on purpose: a stale cached app.js may
+         still rewrite textContent (the legacy emoji pattern) and wipe the knob.
+         This restores it in the same microtask and mirrors data-theme to
+         aria-pressed — the CSS knob slide needs no other JS. */
+      (function () {
+        var b = document.getElementById("theme-toggle");
+        if (!b) return;
+        var knob = b.innerHTML;
+        function sync() {
+          if (!b.querySelector(".knob")) b.innerHTML = knob;
+          var dark = document.documentElement.getAttribute("data-theme") === "dark";
+          b.setAttribute("aria-pressed", dark ? "true" : "false");
+          b.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+        }
+        new MutationObserver(sync).observe(b, { childList: true });
+        new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+        sync();
+      })();
+    </script>
+
+    <!-- hero: content paints immediately (no reveal); 3D field lazy-loads into fixed-height art -->
+    <header class="hero">
+      <div class="hero-grid">
+        <div>
+          <h1>Know whether AI engines recommend you — or your competitors.</h1>
+          <p class="sub">A weekly digest: <strong>36 real buyer questions</strong> asked to real AI engines,
+             every citation parsed for <strong>you and your competitors</strong>, your
+             <strong>share of voice</strong> scored week over week — and
+             <strong>exactly 3 prioritized fixes</strong>.</p>
+          <div class="row">
+            <a class="btn grad" href="https://itsxwang.github.io/cash-register/checkout.html?item=citation-monitor-weekly-digest">Start monitoring — $19/mo</a>
+            <a class="btn ghost" href="digest-2026-W46.html">Read the live sample digest →</a>
+          </div>
+          <div class="banner"><strong>Pay in BTC / ETH (Base) / SOL</strong> — no card needed, no accounts, cancel by email.</div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <canvas id="field-canvas"></canvas>
+          <!-- static fallback (mobile <768px, reduced-motion, or if 3D never loads) -->
+          <svg viewBox="0 0 360 300">
+            <g fill="none" stroke="var(--accent)" stroke-opacity=".3">
+              <circle cx="180" cy="150" r="108"/>
+              <ellipse cx="180" cy="150" rx="108" ry="40"/>
+              <ellipse cx="180" cy="150" rx="40" ry="108"/>
+              <ellipse cx="180" cy="150" rx="82" ry="108" transform="rotate(30 180 150)"/>
+            </g>
+            <ellipse cx="180" cy="150" rx="148" ry="34" fill="none" stroke="var(--accent)" stroke-opacity=".45" transform="rotate(-16 180 150)"/>
+            <g fill="var(--bad)" fill-opacity=".75">
+              <circle cx="140" cy="72" r="4"/><circle cx="224" cy="58" r="4"/><circle cx="272" cy="140" r="4"/>
+              <circle cx="228" cy="200" r="4"/><circle cx="152" cy="238" r="4"/><circle cx="96" cy="140" r="4"/>
+              <circle cx="176" cy="252" r="4"/><circle cx="252" cy="102" r="4"/><circle cx="120" cy="180" r="4"/>
+            </g>
+            <g fill="var(--good)">
+              <circle cx="92" cy="92" r="5.5"/><circle cx="258" cy="230" r="5.5"/><circle cx="182" cy="42" r="5.5"/>
+              <circle cx="102" cy="212" r="5.5"/><circle cx="248" cy="168" r="5.5"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- trust strip (design spec: under hero, 4 icons+labels) -->
+      <div class="trust">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>On-chain auto-confirm</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>7-day refund</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>Email support</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>$0 fees</span>
+      </div>
+
+      <!-- stat counters: HTML ships final values; pre-paint script below resets before paint -->
+      <div class="stats">
+        <div class="stat"><div class="n"><span class="zero" data-count>0/72</span></div><div class="l">answers that named the monitored brand (baseline week)</div></div>
+        <div class="stat"><div class="n" data-count>25</div><div class="l">answers citing BitPay — the top competitor</div></div>
+        <div class="stat"><div class="n" data-count>72</div><div class="l">real engine answers analyzed (36 questions × 2 engines)</div></div>
+        <div class="stat"><div class="n" data-count>3</div><div class="l">prioritized fixes in every digest</div></div>
+      </div>
+      <script>
+        /* pre-paint counter reset — runs before the stats paint; app.js animates them
+           back up on view. Safety restore at 3.5s if app.js never arrived. */
+        (function () {
+          var els = document.querySelectorAll("[data-count]");
+          for (var i = 0; i < els.length; i++) {
+            var el = els[i];
+            el.dataset.final = el.textContent.trim();
+            el.textContent = /^\d+\/\d+$/.test(el.dataset.final) ? el.textContent.trim().replace(/\/\d+$/, "/0") : "0";
+          }
+          setTimeout(function () {
+            if (window.__cmApp) return;
+            for (var j = 0; j < els.length; j++) {
+              if (els[j].dataset.done !== "1") els[j].textContent = els[j].dataset.final;
+            }
+          }, 3500);
+        })();
+      </script>
+    </header>
+
+    <section class="section" id="how">
+      <h2 class="reveal">How it works</h2>
+      <p class="sub reveal">One monitored brand. 36 buyer-phrase prompts you help curate. Zero scraping — official APIs only.</p>
+      <ol class="steps">
+        <li class="reveal"><strong>An agent asks your 36 buyer questions</strong> across AI engines (Groq-hosted gpt-oss-120b and Gemini Flash today) — phrased the way buyers actually ask: “best tool for X”, “X alternatives”, “how do I solve X”.</li>
+        <li class="reveal"><strong>Every answer is parsed for citations</strong> — exact and alias matching for your brand and each tracked competitor, with the exact prompt and snippet kept as a receipt.</li>
+        <li class="reveal"><strong>Your share of voice is scored</strong> per question, per engine, and week over week — gains, losses, and competitor movement are diffed against last week.</li>
+        <li class="reveal"><strong>Every Monday you get the digest</strong> — page + email — ending in exactly 3 prioritized fixes with the data that justifies each one.</li>
+      </ol>
+    </section>
+
+    <section class="section" id="sample">
+      <h2 class="reveal">A real report card, not a mockup</h2>
+      <p class="sub reveal">Baseline week W46 for our demo brand “StableDesk” — live engines, real answers. This gap is the product.</p>
+      <div class="report reveal">
+        <div class="headline">
+          <div><div class="n bad">0/72</div><div class="l">brand citations</div></div>
+          <div><div class="n">25</div><div class="l">BitPay — top competitor</div></div>
+          <div><div class="n">16</div><div class="l">Coinbase Commerce</div></div>
+          <div><div class="n">0.0%</div><div class="l">brand share of voice</div></div>
+        </div>
+        <table class="cites">
+          <tr><td class="who">BitPay</td><td class="cnt">25</td><td class="bar" style="--w:100%"><i></i></td></tr>
+          <tr><td class="who">Coinbase Commerce</td><td class="cnt">16</td><td class="bar" style="--w:64%"><i></i></td></tr>
+          <tr><td class="who">Request Finance</td><td class="cnt">2</td><td class="bar" style="--w:8%"><i></i></td></tr>
+          <tr><td class="who">Cryptio</td><td class="cnt">1</td><td class="bar" style="--w:4%"><i></i></td></tr>
+          <tr><td class="who">StableDesk <span class="hint">(monitored brand)</span></td><td class="cnt">0</td><td class="bar zero" style="--w:0%"><i></i></td></tr>
+        </table>
+        <p class="hint" style="margin:10px 0 0">Bar lengths are relative to the leader (BitPay = 100%). Counts are citations across all 72 answers.</p>
+      </div>
+      <div class="fixes">
+        <div class="fix reveal"><span class="no">P1</span><div><b>Turn “BitPay alternatives” prompts into comparison-page wins</b><p>Competitors were named in every pricing-shaped prompt. Publish head-to-head comparison pages with quoteable feature/price tables.</p></div></div>
+        <div class="fix reveal"><span class="no">P2</span><div><b>Win the Spanish-language prompts — competitors currently own them</b><p>Publish a Spanish FAQ answering the exact prompts in the config: “Cuál es la mejor herramienta para facturar en USDT”.</p></div></div>
+        <div class="fix reveal"><span class="no">P3</span><div><b>Answer the exact “how do I…” questions buyers ask the engines</b><p>How-to prompts had the fewest citations overall — the lowest-hanging citation real estate.</p></div></div>
+      </div>
+      <div class="row">
+        <a class="btn ghost" href="digest-2026-W46.html">Week 1 digest (W46) →</a>
+        <a class="btn ghost" href="digest-2026-W47.html">Week 2 digest (W47) →</a>
+      </div>
+      <p class="hint" style="margin-top:10px">Week 2 repeated the same 72-question panel with both engines: StableDesk 0/72 again, BitPay 54, Coinbase Commerce 48. Raw counts move when engine model versions change — the rank and the week-over-week trend are the stable signal. About the demo brand: “StableDesk” is fictional — real engines have never heard of it, which is exactly why it scores 0 while real competitors get cited. Your brand has history; week 2 shows your trend.</p>
+    </section>
+
+    <section class="section" id="pricing">
+      <h2 class="reveal">Pricing</h2>
+      <p class="sub reveal">Crypto-only. No card, no account, cancel by email, 7-day refund.</p>
+      <div class="pricing">
+        <div class="plan reveal">
+          <h3>Single brand</h3>
+          <ul>
+            <li><b>36 buyer-phrase prompts</b> across 2 engines</li>
+            <li>Weekly Monday digest + citation history &amp; trends</li>
+            <li>Exactly <b>3 prioritized fixes</b></li>
+          </ul>
+          <div class="price"><span class="amount">$19</span><span class="per">/ month</span></div>
+          <a class="btn" href="https://itsxwang.github.io/cash-register/checkout.html?item=citation-monitor-weekly-digest">Subscribe — $19/mo</a>
+          <p class="hint">Pay in BTC / ETH (Base) / SOL — no card needed.</p>
+        </div>
+        <div class="plan agency reveal">
+          <span class="tag">For agencies</span>
+          <h3>Agency</h3>
+          <ul>
+            <li>Everything in single-brand, for <b>3 brands</b></li>
+            <li>Per-brand digests — resell each at 2–3×</li>
+            <li>White-label reports on the roadmap</li>
+          </ul>
+          <div class="price"><span class="amount">$39</span><span class="per">/ month</span></div>
+          <a class="btn grad" href="https://itsxwang.github.io/cash-register/checkout.html?item=citation-monitor-agency">Subscribe — $39/mo</a>
+          <p class="value-line">Same price per brand: <b>$13/brand</b> vs $19 — save 31%.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="honesty">
+      <h2 class="reveal">What this is and isn't</h2>
+      <div class="islist">
+        <div class="card reveal">
+          <h3>It is</h3>
+          <ul class="tick">
+            <li>Weekly monitoring of what AI assistants answer to your buyers' questions.</li>
+            <li>Scores built from <strong>official free-tier APIs</strong> (Groq, Gemini) — no scraping, ever.</li>
+            <li>Exactly 3 prioritized recommendations, each backed by this week's data.</li>
+            <li>Fully disclosed methodology — your exact prompts and scoring math ship inside every digest.</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3>It isn't</h3>
+          <ul class="cross">
+            <li>A direct tap into ChatGPT or Perplexity consumer apps — LLM answers via official APIs are <strong>proxies</strong> for those engines. That's disclosed in every digest.</li>
+            <li>An SEO tool — we monitor AI answer citations, not Google rankings.</li>
+            <li>A guarantee of citations — it's a measurement and fixing loop, not magic.</li>
+            <li>A data broker — we track only the brand and competitors you list in your config.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="hint reveal">If a proxy approach is a dealbreaker for you, wait until engine-native monitoring APIs mature — we'd rather say it plainly than oversell it. Transparency is the product's whole style.</p>
+    </section>
+
+    <section class="section faq" id="faq">
+      <h2 class="reveal">FAQ</h2>
+      <details>
+        <summary>Which AI engines do you monitor?</summary>
+        <p>Today: Groq-hosted <code>gpt-oss-120b</code> and Google <code>Gemini Flash</code> (official free-tier APIs — that's how the price stays at $19). Perplexity's Sonar is next when API budget allows; the engine list is a config value, not a promise.</p>
+      </details>
+      <details>
+        <summary>How is the digest delivered?</summary>
+        <p>A private page plus an email every Monday. The same digest format as the <a href="digest-2026-W46.html">public sample</a>: headline numbers, per-engine breakdown, competitor receipts, gains/losses, and the 3 fixes.</p>
+      </details>
+      <details>
+        <summary>Can I cancel?</summary>
+        <p>Yes — reply to any digest email. No retention flows, no dark patterns. Crypto billing means no card to fight with.</p>
+      </details>
+      <details>
+        <summary>Does it work for non-English markets?</summary>
+        <p>The engine prompts are locale-aware today (the sample already tracks Spanish-language buyer questions). Curated locale packs for ES / PT / DE are on the roadmap — non-US founders are exactly who this is built for.</p>
+      </details>
+      <details>
+        <summary>What do the "3 fixes" actually look like?</summary>
+        <p><a href="digest-2026-W46.html">See the sample digest</a> — each fix has a priority, the data behind it, concrete actions, and the exact prompts it targets. E.g. “publish a ‘X vs BitPay’ comparison page with a quoteable feature/price table”.</p>
+      </details>
+      <details>
+        <summary>Refunds?</summary>
+        <p>7 days, no questions — refunds go back on-chain to the sending address. Message with your order id.</p>
+      </details>
+    </section>
+
+    <footer>
+      <div class="foot-cols">
+        <div>
+          <span class="brand">📈 Citation Monitor</span>
+          <p class="muted">Weekly AI-citation digests: who engines recommend, your share of voice, exactly 3 prioritized fixes. Crypto-only, $19/mo.</p>
+        </div>
+        <nav class="footnav" aria-label="Site">
+          <a href="https://itsxwang.github.io/cash-register/">Store</a>
+          <a href="https://itsxwang.github.io/cash-register/status.html">Order status</a>
+          <a href="digest-2026-W46.html">Sample: week 1</a>
+          <a href="digest-2026-W47.html">Sample: week 2</a>
+          <a href="https://github.com/itsxwang/citation-monitor">Code</a>
+        </nav>
+        <div>
+          <span class="muted">Support: <a href="mailto:xion.dev7@gmail.com">xion.dev7@gmail.com</a></span><br>
+          <span class="muted">crypto-only: BTC / ETH / SOL · static site, zero paid services</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+<script data-goatcounter="https://xionmicrotools.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Visibility Digest — StableDesk (2026-W47)</title>
+<style>
+:root { --ink:#1c2130; --muted:#6b7280; --line:#e5e7eb; --bg:#f7f7fb; --card:#ffffff;
+        --accent:#6d5dfc; --good:#0e9f6e; --bad:#e02424; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--ink);
+       font:15px/1.55 -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+.wrap { max-width: 860px; margin: 0 auto; padding: 32px 20px 64px; }
+header h1 { font-size: 26px; margin: 0 0 4px; }
+header .sub { color: var(--muted); margin-bottom: 18px; }
+.badge { display:inline-block; padding:2px 10px; border-radius:999px; font-size:12px;
+         font-weight:600; letter-spacing:.03em; }
+.badge.demo { background:#fef3c7; color:#92400e; border:1px solid #fcd34d; }
+.badge.live { background:#d1fae5; color:#065f46; border:1px solid #6ee7b7; }
+.cards { display:flex; gap:14px; flex-wrap:wrap; margin: 18px 0; }
+.card { flex:1 1 180px; background:var(--card); border:1px solid var(--line);
+        border-radius:12px; padding:14px 16px; }
+.card .label { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); }
+.card .value { font-size:30px; font-weight:700; margin-top:2px; }
+.card .delta { font-size:12.5px; margin-top:2px; color:var(--muted); }
+.card .delta.up { color:var(--good); } .card .delta.down { color:var(--bad); }
+.card.trend { flex-basis:100%; }
+.spark { width:100%; height:96px; }
+.sparklbl { font-size:10px; fill:#9ca3af; }
+h2 { font-size:17px; margin: 30px 0 10px; }
+table { width:100%; border-collapse: collapse; background:var(--card);
+        border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+th, td { padding:9px 12px; text-align:left; border-bottom:1px solid var(--line); font-size:14px; }
+th { background:#fafafc; font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+tr:last-child td { border-bottom:none; }
+.snippet { background:var(--card); border:1px solid var(--line); border-left:3px solid var(--accent);
+           border-radius:8px; padding:10px 14px; margin:10px 0; font-size:13.5px; color:#374151; }
+.chg { background:var(--card); border:1px solid var(--line); border-radius:8px;
+       padding:9px 14px; margin:8px 0; font-size:14px; }
+.chg.gain { border-left:3px solid var(--good); }
+.chg.loss { border-left:3px solid var(--bad); }
+.rec { background:var(--card); border:1px solid var(--line); border-radius:12px;
+       padding:16px 18px; margin:12px 0; }
+.rec h3 { margin:0 0 8px; font-size:16px; }
+.rec .pri { display:inline-block; background:var(--accent); color:#fff; border-radius:6px;
+            padding:1px 8px; font-size:12px; font-weight:700; margin-right:8px; }
+.rec .why { color:#374151; font-size:14px; margin-bottom:10px; }
+.rec ul { margin:0; padding-left:20px; }
+.rec li { margin:4px 0; font-size:14px; }
+.rec .targets { margin-top:10px; font-size:12.5px; color:var(--muted); }
+footer { margin-top:40px; border-top:1px solid var(--line); padding-top:14px;
+         color:var(--muted); font-size:12.5px; }
+code { background:#eef0f6; border-radius:4px; padding:0 4px; }
+.tablewrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border-radius:10px; }
+.tablewrap table { border-radius:0; }
+@media (max-width: 600px) {
+  .wrap { padding: 24px 14px 48px; }
+  .cards { gap: 10px; }
+  .card { padding: 12px 13px; }
+  th, td { padding: 7px 8px; font-size: 12.5px; }
+  th { font-size: 10.5px; letter-spacing: .04em; }
+  .rec { padding: 14px 14px; }
+  .snippet { padding: 9px 12px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Weekly AI Visibility Digest — StableDesk</h1>
+    <div class="sub">2026-W47 · <span class='badge live'>LIVE RUN</span> · does ChatGPT-style &amp; Perplexity-style AI name you when buyers ask?</div>
+  </header>
+
+  <div class="cards">
+    <div class="card"><div class="label">Share of voice</div>
+      <div class="value">0.0%</div><span class='delta'>→ unchanged</span></div>
+    <div class="card"><div class="label">Citation rate</div>
+      <div class="value">0%</div>
+      <div class="delta">0/36 prompts named StableDesk · <span class='delta'>→ unchanged</span></div></div>
+    <div class="card"><div class="label">Answers analyzed</div>
+      <div class="value">72</div>
+      <div class="delta">gemini, groq</div></div>
+    <div class="card trend"><div class="label">Score trend (share of voice by week)</div>
+      <svg viewBox="0 0 560 90" class="spark"><polyline fill="none" stroke="#6d5dfc" stroke-width="3" points="8.0,82.0 552.0,82.0"/><circle cx="8.0" cy="82.0" r="3.5" fill="#6d5dfc"/><circle cx="552.0" cy="82.0" r="3.5" fill="#6d5dfc"/><text x="8.0" y="89" class="sparklbl">start</text><text x="552.0" y="89" class="sparklbl" text-anchor="end">now</text></svg></div>
+  </div>
+
+  <h2>Score trend</h2>
+  <div class="tablewrap"><table><tr><th>Week</th><th>Share of voice</th><th>Citation rate</th></tr><tr><td>2026-W46</td><td>0.0%</td><td>0.0%</td></tr><tr><td>2026-W47</td><td>0.0%</td><td>0.0%</td></tr></table></div>
+
+  <h2>Per-engine breakdown</h2>
+  <div class="tablewrap"><table><tr><th>Engine</th><th>Model</th><th>Answers</th><th>Brand cited</th><th>SOV</th></tr><tr><td><b>gemini</b></td><td><code>gemini-3.1-flash-lite</code></td><td>36</td><td>0/36</td><td>0.0%</td></tr><tr><td><b>groq</b></td><td><code>openai/gpt-oss-120b</code></td><td>36</td><td>0/36</td><td>0.0%</td></tr></table></div>
+
+  <h2>Which competitors got cited — and why</h2>
+  <div class="tablewrap"><table><tr><th>Competitor</th><th>Answers naming it</th><th>Δ vs last week</th></tr><tr><td><b>BitPay</b></td><td>54</td><td>+23</td></tr><tr><td><b>Coinbase Commerce</b></td><td>48</td><td>+25</td></tr><tr><td><b>Request Finance</b></td><td>21</td><td>+21</td></tr><tr><td><b>Gnosis Pay</b></td><td>1</td><td>+1</td></tr><tr><td><b>Cryptio</b></td><td>1</td><td>+1</td></tr></table></div>
+  <div class='snippet'><b>BitPay</b> · prompt “What is the best tool for invoicing clients in USDC?”<br>“…rations with Shopify, WooCommerce, and Zapier for automated invoicing. 2. **BitPay** – Robust invoicing dashboard, USDC payment option, and accounting export…”</div><div class='snippet'><b>Coinbase Commerce</b> · prompt “What is the best tool for invoicing clients in USDC?”<br>“**Top invoicing tools that natively support USDC** 1. **Coinbase Commerce** – Simple setup, direct USDC payouts, and integrations with Shopify, WooC…”</div><div class='snippet'><b>Request Finance</b> · prompt “What is the best tool for invoicing clients in USDC?”<br>“…ized crypto-native platforms that automate payment tracking and accounting: 1. **Request Finance**: The industry standard for B2B crypto invoicing. It supports USDC on mul…”</div><div class='snippet'><b>Gnosis Pay</b> · prompt “Gnosis Pay alternatives for business payments”<br>“**Top alternatives to Gnosis Pay for business payments (ranked by overall versatility, global reach and dev…”</div>
+
+  <h2>What changed this week</h2>
+  <div class='chg'>No citation changes week-over-week.</div>
+
+  <h2>This week's 3 actions (prioritized)</h2>
+  <div class='rec'><h3><span class='pri'>P1</span>Turn “BitPay alternatives” prompts into comparison-page wins</h3><div class='why'><b>Why:</b> Across 10 &#x27;alternatives / vs&#x27; prompts this week, competitors were named in 100% of them but StableDesk in only 0% (0/10). BitPay leads the whole run with 54 citations — answer engines default to it because it has comparison-shaped content to quote.</div><ul><li>Publish a &#x27;StableDesk vs BitPay&#x27; page with a feature/price table answer engines can quote verbatim.</li><li>Create an &#x27;X alternatives&#x27; hub page naming each tracked competitor, with honest positioning and current pricing.</li><li>Mirror the exact prompt phrasing as on-page H2 questions so the pages match buyer wording 1:1.</li></ul><div class='targets'>Target prompts: “BitPay alternatives for invoicing”; “Coinbase Commerce alternatives for recurring billing”; “Request Finance alternatives for freelancer invoicing”</div></div><div class='rec'><h3><span class='pri'>P2</span>Win the Spanish-language prompts — competitors currently own them</h3><div class='why'><b>Why:</b> StableDesk was named in 0/4 Spanish prompts (0%). Non-English queries are your wedge: fewer competitors bother publishing localized answers, so each citation is cheap to win and sticky.</div><ul><li>Translate your top 5 landing pages + pricing page into Spanish.</li><li>Publish a Spanish FAQ answering the exact Spanish-tagged prompts from your config.</li><li>Add hreflang tags so the Spanish pages are indexable in the right locale.</li></ul><div class='targets'>Target prompts: “Cuál es la mejor herramienta para facturar en USDT”; “Cómo facturar a clientes en criptomonedas desde Argentina”; “Alternativas a BitPay para facturación”</div></div><div class='rec'><h3><span class='pri'>P3</span>Answer the exact &#x27;how do I…&#x27; questions buyers ask the engines</h3><div class='why'><b>Why:</b> In 11 how-to prompts, StableDesk appeared in 0. Competitors showed up in 9. How-to gaps are the cheapest citations to win: engines quote step-by-step pages directly.</div><ul><li>Publish one guide per missing how-to prompt, titled with the prompt itself (e.g. &#x27;How do I invoice a client in USDT?&#x27;).</li><li>Include a 3-step summary block at the top — that is the text answer engines lift.</li><li>Interlink each guide from your docs and product pages so crawlers see it as core content.</li></ul><div class='targets'>Target prompts: “How do I invoice a client in USDT?”; “How do freelancers bill clients in crypto?”; “How to accept stablecoin payments for services”</div></div>
+
+  <footer>
+    <p><b>Methodology.</b> Answers are collected weekly from official LLM APIs (free tiers of
+    Groq/Llama and Google Gemini by default) responding to your buyer-phrase prompts; these serve as
+    proxies for the AI answer engines buyers actually use. Mention detection uses exact + alias
+    matching with typo tolerance. <b>Share of voice</b> = your share of named products per answer,
+    averaged across answers. <b>Citation rate</b> = share of answers naming your brand at all.
+    Token use per weekly run is intentionally tiny (pennies at paid rates; $0 on free tiers).</p>
+    
+    <p>Generated by citation-monitor · crypto-native · $19/mo</p>
+  </footer>
+</div>
+<script data-goatcounter="https://xionmicrotools.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
